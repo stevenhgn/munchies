@@ -8,5 +8,14 @@
     ],
     "@babel/preset-react"
   ],
-  "plugins": ["react-hot-loader/babel"]
+  "plugins": [
+    [
+      "babel-plugin-styled-components",
+      {
+        "ssr": false,
+        "displayName": true
+      }
+    ],
+    "react-hot-loader/babel"
+  ]
 }
