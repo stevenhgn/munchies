@@ -26,6 +26,7 @@
   "homepage": "https://github.com/alexhhn/munchies#readme",
   "dependencies": {
     "@material-ui/core": "^4.9.10",
+    "@material-ui/system": "^4.9.10",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hot-loader": "^4.12.20",
