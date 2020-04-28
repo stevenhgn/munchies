@@ -14,8 +14,8 @@ class App extends React.Component {
 
     this.toggleTheme = () => {
       console.log("efef");
-      this.setState(state => ({
-        theme: state.theme === themes.dark ? themes.light : themes.dark
+      this.setState((state) => ({
+        theme: state.theme === themes.dark ? themes.light : themes.dark,
       }));
     };
 
@@ -23,7 +23,7 @@ class App extends React.Component {
     // be passed down into the context provider
     this.state = {
       theme: themes.light,
-      toggleTheme: this.toggleTheme
+      toggleTheme: this.toggleTheme,
     };
   }
 
@@ -45,7 +45,7 @@ class App extends React.Component {
 }
 
 const Wrapper = styled.div`
-  color: ${props => props.color};
+  color: ${(props) => props.color};
 `;
 
 export default hot(App);

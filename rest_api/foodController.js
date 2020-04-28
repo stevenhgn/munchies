@@ -13,7 +13,7 @@ exports.index = function(req, res) {
     res.json({
       status: "success",
       message: "Foods retrieved successfully",
-      data: foods
+      items: foods
     });
   });
 };

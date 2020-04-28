@@ -53,7 +53,6 @@ const config = {
     fs: "empty",
     net: "empty",
   },
-  // target: "node"
 };
 
 module.exports = config;
