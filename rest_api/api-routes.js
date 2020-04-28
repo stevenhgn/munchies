@@ -10,6 +10,7 @@ router.get("/", function(req, res) {
 });
 // Import contact controller
 var contactController = require("./contactController");
+var foodController = require("./foodController");
 // Contact routes
 router
   .route("/contacts")
@@ -21,5 +22,15 @@ router
   .patch(contactController.update)
   .put(contactController.update)
   .delete(contactController.delete);
+router
+  .route("/foods")
+  .get(foodController.index)
+  .post(foodController.new);
+router
+  .route("/foods/:food_id")
+  .get(foodController.view)
+  .patch(foodController.update)
+  .put(foodController.update)
+  .delete(foodController.delete);
 // Export API routes
 module.exports = router;
