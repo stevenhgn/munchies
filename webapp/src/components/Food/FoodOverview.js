@@ -5,6 +5,7 @@ import Card from "@material-ui/core/Card";
 
 const FoodOverview = ({ match }) => {
   console.warn(match.params.foodId);
+  // TODOS: Send a get request to the api to get the food with foodId
   return (
     <Wrapper>
       <h1>Food Name</h1>
