@@ -16,6 +16,7 @@
         "displayName": true
       }
     ],
+    ["@babel/transform-runtime"],
     "react-hot-loader/babel"
   ]
 }
