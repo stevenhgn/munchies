@@ -17,6 +17,7 @@ class App extends React.Component {
     this.toggleTheme = () => {
       this.setState((state) => ({
         theme: state.theme === themes.dark ? themes.light : themes.dark,
+        themeString: state.theme === themes.dark ? "Dark mode" : "Light mode",
       }));
     };
 
@@ -25,12 +26,11 @@ class App extends React.Component {
     this.state = {
       theme: themes.light,
       toggleTheme: this.toggleTheme,
+      themeString: "Dark mode",
     };
   }
 
   render() {
-    let test = "Dark mode";
-
     return (
       <Wrapper>
         <ThemeContext.Provider value={this.state}>
@@ -46,13 +46,13 @@ class App extends React.Component {
                       style={{ position: "absolute", right: 0 }}
                       onClick={toggleTheme}
                     >
-                      {test}
+                      {this.state.themeString}
                     </Button>
                   )}
                 </ThemeContext.Consumer>
               </Header>
               <Switch>
-                <Route path="/food/:foodId" component={FoodOverview}/>
+                <Route path="/food/:foodId" component={FoodOverview} />
                 <Route path="/">
                   <Home color={this.state.theme} />
                 </Route>
