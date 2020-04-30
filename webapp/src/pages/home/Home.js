@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import ThemeContext from "../../theme-context";
 import getFoods from "../../api/foods";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { LinkWrapper } from "../../components/Box";
 
 var Home = (props) => {
   const [foods, setFoods] = useState([]);
@@ -18,49 +20,24 @@ var Home = (props) => {
   if (foods.length === 0) {
     return <h1>Fetching foods...</h1>; // Displaying loading process as long as there are no food available.
   }
-  let test = "Dark mode";
   return (
     <Wrapper>
-      <Header>
-        <h1>Munchies</h1>
-
-        <ThemeContext.Consumer>
-          {({ theme, toggleTheme }) => (
-            <Button
-              style={{ position: "absolute", right: 0 }}
-              onClick={toggleTheme}
-            >
-              {test}
-            </Button>
-          )}
-        </ThemeContext.Consumer>
-      </Header>
       <CardList>
         {foods.map((food) => (
-          <CardElement
-            key={food._id}
-            name={food.name}
-            image={food.image}
-            price={food.price}
-            price_range={food.price_range}
-          />
+          <LinkWrapper to={"/food/" + food._id} key={food._id}>
+            <CardElement
+              key={food._id}
+              name={food.name}
+              image={food.image}
+              price={food.price}
+              price_range={food.price_range}
+            />
+          </LinkWrapper>
         ))}
       </CardList>
     </Wrapper>
   );
 };
-
-// TODOS: Design dark/light mode button
-const StyledButton = styled(Button)`
-  background-color: #6772e5;
-  color: #fff;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  padding: 4px 7px;
-  display: "end";
-  &:hover {
-    background-color: #5469d4;
-  }
-`;
 
 const Wrapper = styled.div`
   /* ${spacing};

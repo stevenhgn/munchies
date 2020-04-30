@@ -5,6 +5,10 @@ import Home from "./pages/home/Home";
 import { ThemeProvider } from "styled-components";
 import ThemeContext from "./theme-context";
 import themes from "./shared/themes";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import FoodOverview from "./components/Food/FoodOverview";
+import { LinkWrapper } from "./components/Box";
 
 class App extends React.Component {
   constructor(props) {
@@ -25,18 +29,58 @@ class App extends React.Component {
   }
 
   render() {
+    let test = "Dark mode";
+
     return (
-      <ThemeContext.Provider value={this.state}>
-        <ThemeProvider theme={this.state.theme}>
-          <Home color={this.state.theme} />
-        </ThemeProvider>
-      </ThemeContext.Provider>
+      <Wrapper>
+        <ThemeContext.Provider value={this.state}>
+          <ThemeProvider theme={this.state.theme}>
+            <Router>
+              <Header>
+                <LinkWrapper to="/">
+                  <h1>Munchies</h1>
+                </LinkWrapper>
+                <ThemeContext.Consumer>
+                  {({ theme, toggleTheme }) => (
+                    <Button
+                      style={{ position: "absolute", right: 0 }}
+                      onClick={toggleTheme}
+                    >
+                      {test}
+                    </Button>
+                  )}
+                </ThemeContext.Consumer>
+              </Header>
+              <Switch>
+                <Route path="/food/:foodId" component={FoodOverview} />
+                <Route path="/">
+                  <Home color={this.state.theme} />
+                </Route>
+              </Switch>
+            </Router>
+          </ThemeProvider>
+        </ThemeContext.Provider>
+      </Wrapper>
     );
   }
 }
-
-const Wrapper = styled.div`
-  color: ${(props) => props.color};
+const Header = styled.div`
+  flex-wrap: wrap;
+  flex-direction: row;
+  display: flex;
 `;
-
+const Wrapper = styled.div`
+  /* color: ${(props) => props.color}; */
+`;
+// TODOS: Design dark/light mode button
+const StyledButton = styled(Button)`
+  background-color: #6772e5;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 4px 7px;
+  display: "end";
+  &:hover {
+    background-color: #5469d4;
+  }
+`;
 export default hot(App);

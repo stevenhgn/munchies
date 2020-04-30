@@ -1,4 +1,4 @@
-import React, { Redirect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { spacing, palette, typography } from "@material-ui/system";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,7 +9,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Box from "../../components/Box";
+import { Box } from "../../components/Box";
 
 const useStyles = makeStyles({
   root: {
