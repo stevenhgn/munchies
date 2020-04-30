@@ -52,7 +52,7 @@ class App extends React.Component {
                 </ThemeContext.Consumer>
               </Header>
               <Switch>
-                <Route path="/food/:foodId" component={FoodOverview} />
+                <Route path="/food/:foodId" component={FoodOverview}/>
                 <Route path="/">
                   <Home color={this.state.theme} />
                 </Route>
