@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import CardElement from "../../components/Card/Card";
+import { spacing, palette, typography, display } from "@material-ui/system";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import ThemeContext from "../../theme-context";
-import Box from "../../components/Box";
 import getFoods from "../../api/foods";
 
-var Home = () => {
+var Home = (props) => {
   const [foods, setFoods] = useState([]);
   useEffect(() => {
     async function fetchFood() {
@@ -15,37 +15,68 @@ var Home = () => {
     }
     fetchFood();
   }, []);
-
-  console.log("food", foods);
   if (foods.length === 0) {
-    return <h1>Fetching foods...</h1>;
+    return <h1>Fetching foods...</h1>; // Displaying loading process as long as there are no food available.
   }
+  let test = "Dark mode";
   return (
     <Wrapper>
-      <h1>Munchies</h1>
+      <Header>
+        <h1>Munchies</h1>
+
+        <ThemeContext.Consumer>
+          {({ theme, toggleTheme }) => (
+            <Button
+              style={{ position: "absolute", right: 0 }}
+              onClick={toggleTheme}
+            >
+              {test}
+            </Button>
+          )}
+        </ThemeContext.Consumer>
+      </Header>
       <CardList>
         {foods.map((food) => (
-          <CardElement key={food._id} name={food.name} color={"primary"} />
+          <CardElement
+            key={food._id}
+            name={food.name}
+            image={food.image}
+            price={food.price}
+            price_range={food.price_range}
+          />
         ))}
       </CardList>
-      <Box color={"primary"} p={1}>
-        Test primary
-      </Box>
-      <Box color={"primary"} p={5}>
-        Test secondary
-      </Box>
-      <ThemeContext.Consumer>
-        {({ theme, toggleTheme }) => (
-          <Button onClick={toggleTheme}>Dark Mode</Button>
-        )}
-      </ThemeContext.Consumer>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div``;
+// TODOS: Design dark/light mode button
+const StyledButton = styled(Button)`
+  background-color: #6772e5;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 4px 7px;
+  display: "end";
+  &:hover {
+    background-color: #5469d4;
+  }
+`;
+
+const Wrapper = styled.div`
+  /* ${spacing};
+  ${palette}; */
+  flex-wrap: wrap;
+  flex-direction: column;
+  display: flex;
+`;
 
 const CardList = styled.div`
+  flex-wrap: wrap;
+  flex-direction: row;
+  display: flex;
+`;
+
+const Header = styled.div`
   flex-wrap: wrap;
   flex-direction: row;
   display: flex;

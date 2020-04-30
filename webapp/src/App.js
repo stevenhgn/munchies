@@ -1,10 +1,8 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
 import Home from "./pages/home/Home";
 import { ThemeProvider } from "styled-components";
-import Box from "../src/components/Box";
 import ThemeContext from "./theme-context";
 import themes from "./shared/themes";
 
@@ -13,7 +11,6 @@ class App extends React.Component {
     super(props);
 
     this.toggleTheme = () => {
-      console.log("efef");
       this.setState((state) => ({
         theme: state.theme === themes.dark ? themes.light : themes.dark,
       }));
@@ -28,16 +25,10 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("this.state.theme", this.state.theme);
     return (
       <ThemeContext.Provider value={this.state}>
         <ThemeProvider theme={this.state.theme}>
-          <Box color="secondary" p={1}>
-            Test1 primary
-          </Box>
-          <Home color="primary" />
-          {/* Your component tree.
-            Now, you can override Material-UI's styles. */}
+          <Home color={this.state.theme} />
         </ThemeProvider>
       </ThemeContext.Provider>
     );

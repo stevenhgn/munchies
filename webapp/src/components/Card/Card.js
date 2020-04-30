@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Redirect } from "react";
 import styled from "styled-components";
+import { spacing, palette, typography } from "@material-ui/system";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -8,64 +9,84 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Box from "../../components/Box";
+
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    minWidth: 300,
+    maxWidth: 500,
   },
   media: {
-    height: 140,
+    height: 150,
   },
 });
-const theme = {
-  spacing: 4,
-  palette: {
-    primary: "#007bff",
-    secondary: "#dddd",
-  },
-};
 const CardElement = (props) => {
+  let priceRange = "";
+  for (let i = 0; i < props.price_range; i++) {
+    priceRange += "$";
+  }
   const classes = useStyles();
-  var currColor = "primary";
-  // var currColor = this.props.Color;
   return (
-    <CardWrapper>
-      <CardActionArea>
+    <CardWrapper color={"primary"} className={classes.root}>
+      <CardActionsAreaWrapper>
         <CardMedia
           className={classes.media}
-          image="https://www.hennig-olsen.no/wp-content/uploads/2020/02/HOI-L1-1160x800-450ml-Oreo-580x400.jpg"
-          title="Contemplative Reptile"
+          image={props.image}
+          title={props.name}
         />
-        <CardContent>
-          <Typography variant="body2" color={currColor} component="p">
-            {props.name}
+        <CardContentWrapper bgcolor={"backgroundColor"}>
+          <Typography variant="body2" color={"primary"} component="div">
+            <Box color={"primary"}>{props.name}</Box>
+            <Box color={"third"}>
+              {props.price} kr
+              <br />
+              <IWrapper color={"priceRange"}>Price range:</IWrapper>
+              <IWrapper p={2} color={"lightgreen"}>
+                {priceRange}
+              </IWrapper>
+            </Box>
           </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
+        </CardContentWrapper>
+      </CardActionsAreaWrapper>
+      <CardActionsWrapper bgcolor={"backgroundColor"}>
+        {/* <Button size="small">
+          <Box color={"secondary"}>Share</Box>
+        </Button> */}
+        <Button size="small" p={1}>
+          <Box color={"secondary"}>Details</Box>
         </Button>
-        <Button size="small" color="primary">
-          Learn More
+        <Button size="small" p={1}>
+          <Box color={"secondary"}>+ Favourites</Box>
         </Button>
-      </CardActions>
+      </CardActionsWrapper>
     </CardWrapper>
   );
 };
-
+const IWrapper = styled.i`
+  ${spacing};
+  ${palette};
+`;
 const CardWrapper = styled(Card)`
   margin: 10px;
   max-width: 500px;
+  ${spacing};
+  ${palette};
 `;
-
-const StyledButton = styled(Button)`
-  background-color: #6772e5;
-  color: #fff;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  padding: 7px 14px;
-  &:hover {
-    background-color: #5469d4;
-  }
+const CardActionsWrapper = styled(CardActions)`
+  ${spacing};
+  ${palette};
+  ${typography};
+`;
+const CardActionsAreaWrapper = styled(CardActionArea)`
+  ${spacing};
+  ${palette};
+  ${typography};
+`;
+const CardContentWrapper = styled(CardContent)`
+  ${spacing};
+  ${palette};
+  ${typography};
+  opacity: 95%;
 `;
 
 export default CardElement;
