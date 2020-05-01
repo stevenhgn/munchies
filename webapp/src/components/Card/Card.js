@@ -36,21 +36,23 @@ const CardElement = (props) => {
           image={props.image}
           title={props.name}
         />
-        <CardContentWrapper bgcolor={"backgroundColor"}>
+        <CardContentWrapper bgcolor={"cardBackgroundColor"}>
           <Typography variant="body2" color={"primary"} component="div">
             <Box color={"primary"}>{props.name}</Box>
-            <Box color={"third"}>
-              {props.price} kr
-              <br />
-              <IWrapper color={"priceRange"}>Price range:</IWrapper>
-              <IWrapper p={2} color={"lightgreen"}>
+            <Box color={"third"}>{props.price} kr</Box>
+            <Box>
+              <IWrapper
+                p={2}
+                color={"lightgreen"}
+                style={{ position: "absolute", right: 20, bottom: 10 }}
+              >
                 {priceRange}
               </IWrapper>
             </Box>
           </Typography>
         </CardContentWrapper>
       </CardActionAreaWrapper>
-      <CardActionsWrapper bgcolor={"backgroundColor"}>
+      <CardActionsWrapper bgcolor={"cardBackgroundColor"}>
         {/* <Button size="small">
           <Box color={"secondary"}>Share</Box>
         </Button> */}
