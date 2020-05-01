@@ -24,8 +24,8 @@ const useStyles = makeStyles({
   media: {
     height: 150,
     maxWidth: 400,
-    marginLeft: 200,
-    marginRight: 200,
+    marginLeft: "40%",
+    marginRight: "30%",
   },
 });
 const FoodOverview = ({ match }) => {
