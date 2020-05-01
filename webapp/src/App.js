@@ -26,9 +26,9 @@ class App extends React.Component {
     // State also contains the updater function so it will
     // be passed down into the context provider
     this.state = {
-      theme: themes.light,
+      theme: themes.dark,
       toggleTheme: this.toggleTheme,
-      themeString: "Dark mode",
+      themeString: "Light mode",
     };
   }
 
