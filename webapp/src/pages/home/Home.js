@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import CardElement from "../../components/Card/Card";
 import { spacing, palette, typography, display } from "@material-ui/system";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
 import ThemeContext from "../../theme-context";
-import getFoods from "../../api/foods";
+import { getFoods } from "../../api/foods";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { LinkWrapper } from "../../components/Box";
+import { LinkWrapper } from "../../shared/Box";
 
 var Home = (props) => {
   const [foods, setFoods] = useState([]);

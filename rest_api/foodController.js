@@ -40,7 +40,7 @@ exports.view = function(req, res) {
     if (err) res.send(err);
     res.json({
       message: "Food details loading..",
-      data: food
+      item: food
     });
   });
 };

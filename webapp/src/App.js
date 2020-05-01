@@ -8,7 +8,9 @@ import themes from "./shared/themes";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import FoodOverview from "./components/Food/FoodOverview";
-import { LinkWrapper } from "./components/Box";
+import { LinkWrapper } from "./shared/Box";
+import { spacing, palette, typography } from "@material-ui/system";
+import { IWrapper } from "./shared/CardWrapper";
 
 class App extends React.Component {
   constructor(props) {
@@ -38,7 +40,7 @@ class App extends React.Component {
             <Router>
               <Header>
                 <LinkWrapper to="/">
-                  <h1>Munchies</h1>
+                  <HWrapper>Munchies</HWrapper>
                 </LinkWrapper>
                 <ThemeContext.Consumer>
                   {({ theme, toggleTheme }) => (
@@ -64,7 +66,13 @@ class App extends React.Component {
     );
   }
 }
+const HWrapper = styled.h1`
+  ${spacing};
+  ${palette};
+`;
 const Header = styled.div`
+  ${spacing};
+  ${palette};
   flex-wrap: wrap;
   flex-direction: row;
   display: flex;
