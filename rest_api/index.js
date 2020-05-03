@@ -19,7 +19,11 @@ app.use(
 );
 app.use(bodyParser.json());
 // Connect to Mongoose and set connection variable
-mongoose.connect("mongodb://localhost/resthub", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/resthub", { useNewUrlParser: true });
+const uri = "mongodb+srv://stevenhgn:testmongodb123@munchiescluster-tanbj.azure.mongodb.net/test?retryWrites=true&w=majority";
+mongoose.connect(uri, { useNewUrlParser: true , useUnifiedTopology: true }).catch((error) => {
+  console.warn("error: ", error);
+});
 var db = mongoose.connection;
 
 // Added check for DB connection
