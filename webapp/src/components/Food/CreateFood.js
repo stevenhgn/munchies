@@ -160,7 +160,6 @@ const TextFieldWrapper = styled(TextField)`
   input {
     ::-webkit-input-placeholder {
       /* WebKit, Blink, Edge */
-      color: #909;
     }
   }
   ${spacing};
