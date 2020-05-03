@@ -11,23 +11,10 @@ import {
   IWrapper,
   CardMediaWrapper,
   CardWrapperFullWidth,
+  useStyles,
 } from "../../shared/CardWrapper";
 import { getFoodwithId } from "../../api/foods";
-import { makeStyles, CardActions, Divider } from "@material-ui/core";
-const useStyles = makeStyles({
-  root: {
-    // maxWidth: 500,
-    // maxHeight: 2000,
-    // minWidth: 1000,
-    // minHeight: 1000,
-  },
-  media: {
-    height: 150,
-    maxWidth: 400,
-    marginLeft: "40%",
-    marginRight: "30%",
-  },
-});
+
 const FoodOverview = ({ match }) => {
   const classes = useStyles();
   const foodId = match.params.foodId;
