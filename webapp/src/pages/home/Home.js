@@ -19,6 +19,7 @@ var Home = (props) => {
   if (foods.length === 0) {
     return <h1>Fetching foods...</h1>; // Displaying loading process as long as there are no food available.
   }
+
   return (
     <Wrapper>
       <CardList>
