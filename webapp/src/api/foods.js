@@ -10,5 +10,11 @@ const getFoodwithId = async (foodId) => {
   let food = res.data.item;
   return food;
 };
+const createNewFood = async () => {
+  const res = await axiosInstance.post("/foods");
+  //TODOS:
+  let food = res.data.item;
+  return food;
+};
 
-export { getFoods, getFoodwithId };
+export { getFoods, getFoodwithId, createNewFood };

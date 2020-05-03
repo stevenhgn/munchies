@@ -107,7 +107,9 @@ const FoodOverview = ({ match }) => {
               </Typography>
             </CardContentWrapper>
           </CardActionAreaWrapper>
-          {nutritionContent.map((content) => (
+          {nutritionContent.map((
+            content /* apply key attribute to each child */
+          ) => (
             <CardActionsWrapper>
               <Typography variant="body2" color={"primary"} component="div">
                 <Box p={2}>{content}</Box>

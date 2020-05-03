@@ -8,10 +8,10 @@ import themes from "./shared/themes";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import FoodOverview from "./components/Food/FoodOverview";
+import CreateFood from "./components/Food/CreateFood";
 import { LinkWrapper } from "./shared/Box";
 import { spacing, palette, typography } from "@material-ui/system";
 import { IWrapper } from "./shared/CardWrapper";
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -42,6 +42,11 @@ class App extends React.Component {
                 <LinkWrapper to="/">
                   <HWrapper>Munchies</HWrapper>
                 </LinkWrapper>
+                <LinkWrapper to="/createFood">
+                  <StyledButton color={"primary"} style={{ marginTop: "20px" }}>
+                    Create Food
+                  </StyledButton>
+                </LinkWrapper>
                 <ThemeContext.Consumer>
                   {({ theme, toggleTheme }) => (
                     <Button
@@ -55,6 +60,7 @@ class App extends React.Component {
               </Header>
               <Switch>
                 <Route path="/food/:foodId" component={FoodOverview} />
+                <Route path="/createFood" component={CreateFood} />
                 <Route path="/">
                   <Home color={this.state.theme} />
                 </Route>
@@ -73,22 +79,26 @@ const HWrapper = styled.h1`
 const Header = styled.div`
   ${spacing};
   ${palette};
+  columns: 2;
   flex-wrap: wrap;
   flex-direction: row;
   display: flex;
 `;
 const Wrapper = styled.div`
+  ${spacing};
+  ${palette};
+
   /* color: ${(props) => props.color}; */
 `;
 // TODOS: Design dark/light mode button
 const StyledButton = styled(Button)`
-  background-color: #6772e5;
-  color: #fff;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  padding: 4px 7px;
-  display: "end";
-  &:hover {
+  ${spacing};
+  ${palette};
+  /* background-color: #6772e5; */
+  /* box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); */
+  /* padding: 4px 7px; */
+  /* &:hover {
     background-color: #5469d4;
-  }
+  } */
 `;
 export default hot(App);
