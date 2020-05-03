@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ThemeContext from "../../theme-context";
 import { getFoods } from "../../api/foods";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { LinkWrapper } from "../../shared/Box";
+import { LinkWrapper } from "../../shared/StyledSystemComponent";
 
 var Home = (props) => {
   const [foods, setFoods] = useState([]);

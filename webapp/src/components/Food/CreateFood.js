@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { spacing, palette, typography } from "@material-ui/system";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Box } from "../../shared/Box";
-import PropTypes from "prop-types";
+import { Box, StyledTypography } from "../../shared/StyledSystemComponent";
 
 import {
   CardActionsWrapper,
@@ -13,13 +11,12 @@ import {
   IWrapper,
   CardMediaWrapper,
   CardWrapperFullWidth,
-  useStyles,
 } from "../../shared/CardWrapper";
 import { createNewFood } from "../../api/foods";
 import { TextField, MenuItem } from "@material-ui/core";
-const CreateFood = () => {
-  const classes = useStyles();
+import { useForm } from "react-hook-form";
 
+const CreateFood = () => {
   const [food, setFood] = useState("");
   const priceRanges = [
     {
@@ -36,98 +33,89 @@ const CreateFood = () => {
     },
   ];
   const [priceRange, setPriceRange] = React.useState(1);
+  const { register, handleSubmit, watch, errors } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+    console.log(priceRange);
+    // pricerange er i pricerannge
+    // TODOS: Call post.
+  };
 
   const handleChange = (event) => {
     // handle pricerange select change
     setPriceRange(event.target.value);
   };
   return (
-    <Wrapper
-      bgcolor={"backgroundColor"}
-      style={{
-        position: "absolute",
-        top: 90,
-        left: 0,
-        bottom: 0,
-        right: 0,
-      }}
-    >
-      <SecondContentWrapper>
-        <CardWrapperFullWidth
-          style={{
-            /*REMOVE */
-            marginLeft: 160,
-            marginRight: 160,
-            marginTop: 100,
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <CardActionAreaWrapper>
-            <CardContentWrapper bgcolor={"cardBackgroundColor"}>
-              <Typography variant="body2" component="div">
-                <Box color={"primary"}>Create your own food</Box>
-              </Typography>
-            </CardContentWrapper>
-          </CardActionAreaWrapper>
-          <CardActionsWrapper
-            bgcolor={"cardBackgroundColor"}
-            style={{
-              flexDirection: "column",
-            }}
+    <SecondContentWrapper>
+      <CardWrapperFullWidth m={16}>
+        <StyledTypography variant="h5" p={5}>
+          Create your own food
+        </StyledTypography>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)} pl={5} pr={5}>
+          <TextFieldWrapper
+            name="Foodname"
+            inputRef={register}
+            id="outlined-name-primary"
+            fullWidth={true}
+            title="Insert the food name"
+            variant="outlined"
+            required
+            color="primary"
+            placeholder={"Food name"}
+            label="Food name"
+            type="input"
+            margin="normal"
+          ></TextFieldWrapper>
+          <TextFieldWrapper
+            inputRef={register}
+            name="FoodDescription"
+            fullWidth={true}
+            id="outlined-descrip-secondary"
+            title="Insert the food description"
+            variant="outlined"
+            required
+            color="secondary"
+            placeholder={"Food description"}
+            label="Food description"
+            multiline={true}
+            type="text"
+            margin="normal"
+          ></TextFieldWrapper>
+          <TextFieldWrapper
+            name="FoodImage"
+            inputRef={register}
+            fullWidth={true}
+            id="outlined-image-secondary"
+            title="Insert the food image"
+            variant="outlined"
+            required
+            color="secondary"
+            placeholder={"Food image (url)"}
+            label="Food image"
+            multiline={true}
+            type="text"
+            margin="normal"
+          ></TextFieldWrapper>
+          <TextFieldWrapper
+            name="PriceRange"
+            inputRef={register}
+            id="standard-select-price-range"
+            select
+            variant="outlined"
+            label="Select"
+            value={priceRange}
+            onChange={handleChange}
+            helperText="Select food price range"
           >
-            {/* <Box style={{ marginLeft: "120px", marginRight: "120px" }}> */}
-            <TextFieldWrapper
-              className={classes.root}
-              InputProps={{ className: classes.input }}
-              id="outlined-name-primary"
-              fullWidth={true}
-              title="Insert the food name"
-              variant="outlined"
-              required
-              color="primary"
-              placeholder={"Food name"}
-              label="Food name"
-              type="text"
-              margin="normal"
-            ></TextFieldWrapper>
-            <TextFieldWrapper
-              className={classes.root}
-              InputProps={{ className: classes.input }}
-              fullWidth={true}
-              id="outlined-descrip-secondary"
-              title="Insert the food description"
-              variant="outlined"
-              required
-              color="secondary"
-              placeholder={"Food description"}
-              label="Food description"
-              multiline={true}
-              type="text"
-              margin="normal"
-            ></TextFieldWrapper>
-            <TextFieldWrapper
-              id="standard-select-price-range"
-              select
-              variant="outlined"
-              label="Select"
-              value={priceRange}
-              onChange={handleChange}
-              helperText="Select food price range"
-            >
-              {priceRanges.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextFieldWrapper>
-            {/* </Box> */}
-          </CardActionsWrapper>
-          <CardActionsWrapper
-            bgcolor={"cardBackgroundColor"}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
+            {priceRanges.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextFieldWrapper>
+          <ButtonWrapper>
             <Button
+              type="submit"
               size="large"
               p={1}
               title="Send in form and create food"
@@ -135,14 +123,21 @@ const CreateFood = () => {
             >
               <Box color={"lightgreen"}>Send</Box>
             </Button>
-          </CardActionsWrapper>
-        </CardWrapperFullWidth>
-      </SecondContentWrapper>
-    </Wrapper>
+          </ButtonWrapper>
+        </FormWrapper>
+      </CardWrapperFullWidth>
+    </SecondContentWrapper>
   );
 };
 
-const Wrapper = styled.div`
+const ButtonWrapper = styled.div`
+  ${spacing};
+  ${palette};
+  ${typography};
+  display: flex;
+  justify-content: flex-end;
+`;
+const Title = styled.h1`
   ${spacing};
   ${palette};
   ${typography};
@@ -156,12 +151,19 @@ const SecondContentWrapper = styled.div`
 const TextFieldWrapper = styled(TextField)`
   fieldset {
     border-color: white;
+    /* background-color: lightgray; */
   }
   input {
     ::-webkit-input-placeholder {
       /* WebKit, Blink, Edge */
     }
   }
+  ${spacing};
+  ${palette};
+  ${typography};
+`;
+
+const FormWrapper = styled.form`
   ${spacing};
   ${palette};
   ${typography};

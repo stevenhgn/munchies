@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import FoodOverview from "./components/Food/FoodOverview";
 import CreateFood from "./components/Food/CreateFood";
-import { LinkWrapper } from "./shared/Box";
+import { LinkWrapper } from "./shared/StyledSystemComponent";
 import { spacing, palette, typography } from "@material-ui/system";
 import { IWrapper } from "./shared/CardWrapper";
 class App extends React.Component {
@@ -26,9 +26,9 @@ class App extends React.Component {
     // State also contains the updater function so it will
     // be passed down into the context provider
     this.state = {
-      theme: themes.dark,
+      theme: themes.light,
       toggleTheme: this.toggleTheme,
-      themeString: "Light mode",
+      themeString: "Dark mode",
     };
   }
 

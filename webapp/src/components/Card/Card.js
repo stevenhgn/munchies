@@ -11,7 +11,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Box } from "../../shared/Box";
+import { Box } from "../../shared/StyledSystemComponent";
 
 const useStyles = makeStyles({
   root: {
