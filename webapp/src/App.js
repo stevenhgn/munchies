@@ -1,51 +1,104 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
 import Home from "./pages/home/Home";
 import { ThemeProvider } from "styled-components";
-import Box from "../src/components/Box";
 import ThemeContext from "./theme-context";
 import themes from "./shared/themes";
-
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import FoodOverview from "./components/Food/FoodOverview";
+import CreateFood from "./components/Food/CreateFood";
+import { LinkWrapper } from "./shared/Box";
+import { spacing, palette, typography } from "@material-ui/system";
+import { IWrapper } from "./shared/CardWrapper";
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.toggleTheme = () => {
-      console.log("efef");
       this.setState((state) => ({
         theme: state.theme === themes.dark ? themes.light : themes.dark,
+        themeString: state.theme === themes.dark ? "Dark mode" : "Light mode",
       }));
     };
 
     // State also contains the updater function so it will
     // be passed down into the context provider
     this.state = {
-      theme: themes.light,
+      theme: themes.dark,
       toggleTheme: this.toggleTheme,
+      themeString: "Light mode",
     };
   }
 
   render() {
-    console.log("this.state.theme", this.state.theme);
     return (
-      <ThemeContext.Provider value={this.state}>
-        <ThemeProvider theme={this.state.theme}>
-          <Box color="secondary" p={1}>
-            Test1 primary
-          </Box>
-          <Home color="primary" />
-          {/* Your component tree.
-            Now, you can override Material-UI's styles. */}
-        </ThemeProvider>
-      </ThemeContext.Provider>
+      <Wrapper>
+        <ThemeContext.Provider value={this.state}>
+          <ThemeProvider theme={this.state.theme}>
+            <Router>
+              <Header>
+                <LinkWrapper to="/">
+                  <HWrapper>Munchies</HWrapper>
+                </LinkWrapper>
+                <LinkWrapper to="/createFood">
+                  <StyledButton color={"primary"} style={{ marginTop: "20px" }}>
+                    Create Food
+                  </StyledButton>
+                </LinkWrapper>
+                <ThemeContext.Consumer>
+                  {({ theme, toggleTheme }) => (
+                    <Button
+                      style={{ position: "absolute", right: 0 }}
+                      onClick={toggleTheme}
+                    >
+                      {this.state.themeString}
+                    </Button>
+                  )}
+                </ThemeContext.Consumer>
+              </Header>
+              <Switch>
+                <Route path="/food/:foodId" component={FoodOverview} />
+                <Route path="/createFood" component={CreateFood} />
+                <Route path="/">
+                  <Home color={this.state.theme} />
+                </Route>
+              </Switch>
+            </Router>
+          </ThemeProvider>
+        </ThemeContext.Provider>
+      </Wrapper>
     );
   }
 }
-
-const Wrapper = styled.div`
-  color: ${(props) => props.color};
+const HWrapper = styled.h1`
+  ${spacing};
+  ${palette};
 `;
+const Header = styled.div`
+  ${spacing};
+  ${palette};
+  columns: 2;
+  flex-wrap: wrap;
+  flex-direction: row;
+  display: flex;
+`;
+const Wrapper = styled.div`
+  ${spacing};
+  ${palette};
 
+  /* color: ${(props) => props.color}; */
+`;
+// TODOS: Design dark/light mode button
+const StyledButton = styled(Button)`
+  ${spacing};
+  ${palette};
+  /* background-color: #6772e5; */
+  /* box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); */
+  /* padding: 4px 7px; */
+  /* &:hover {
+    background-color: #5469d4;
+  } */
+`;
 export default hot(App);
