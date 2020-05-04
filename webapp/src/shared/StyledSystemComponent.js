@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { spacing, palette } from "@material-ui/system";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 
-const Box = styled.div`
+const StyledBox = styled(Box)`
   ${spacing}
   ${palette}
 `;
@@ -15,4 +16,4 @@ const StyledTypography = styled(Typography)`
   ${spacing}
   ${palette}
 `;
-export { Box, LinkWrapper, StyledTypography };
+export { StyledBox, LinkWrapper, StyledTypography };

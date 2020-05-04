@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { spacing, palette, typography } from "@material-ui/system";
+import { spacing, palette, typography, sizing } from "@material-ui/system";
 import Button from "@material-ui/core/Button";
-import { Box, StyledTypography } from "../../shared/StyledSystemComponent";
-
 import {
-  CardActionsWrapper,
-  CardActionAreaWrapper,
-  CardContentWrapper,
-  IWrapper,
-  CardMediaWrapper,
-  CardWrapperFullWidth,
-} from "../../shared/CardWrapper";
+  StyledBox,
+  StyledTypography,
+} from "../../shared/StyledSystemComponent";
+
+import { CardWrapperFullWidth } from "../../shared/CardWrapper";
 import { createNewFood } from "../../api/foods";
 import { TextField, MenuItem } from "@material-ui/core";
 import { useForm } from "react-hook-form";
@@ -21,15 +17,15 @@ const CreateFood = () => {
   const priceRanges = [
     {
       value: 1,
-      label: "$",
+      label: "$ (0-75 NOK)",
     },
     {
       value: 2,
-      label: "$$",
+      label: "$$ (75-150 NOK)",
     },
     {
       value: 3,
-      label: "$$$",
+      label: "$$$ (150-300 NOK)",
     },
   ];
   const [priceRange, setPriceRange] = React.useState(1);
@@ -37,6 +33,13 @@ const CreateFood = () => {
   const onSubmit = (data) => {
     console.log(data);
     console.log(priceRange);
+    const reqBody = {
+      name: data.name,
+      price: data.price,
+      price_range: priceRange,
+      image: data.image,
+    };
+    createNewFood(reqBody);
     // pricerange er i pricerannge
     // TODOS: Call post.
   };
@@ -51,22 +54,21 @@ const CreateFood = () => {
         <StyledTypography variant="h5" p={5}>
           Create your own food
         </StyledTypography>
-        <FormWrapper onSubmit={handleSubmit(onSubmit)} pl={5} pr={5}>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)} pl={5} pr={5} pb={5}>
           <TextFieldWrapper
-            name="Foodname"
+            name="name"
             inputRef={register}
             id="outlined-name-primary"
             fullWidth={true}
             title="Insert the food name"
             variant="outlined"
             required
-            color="primary"
             placeholder={"Food name"}
             label="Food name"
             type="input"
             margin="normal"
           ></TextFieldWrapper>
-          <TextFieldWrapper
+          {/* <TextFieldWrapper
             inputRef={register}
             name="FoodDescription"
             fullWidth={true}
@@ -74,22 +76,21 @@ const CreateFood = () => {
             title="Insert the food description"
             variant="outlined"
             required
-            color="secondary"
             placeholder={"Food description"}
             label="Food description"
             multiline={true}
             type="text"
             margin="normal"
-          ></TextFieldWrapper>
+          ></TextFieldWrapper> */}
           <TextFieldWrapper
-            name="FoodImage"
+            name="image"
             inputRef={register}
             fullWidth={true}
             id="outlined-image-secondary"
+            rows="2"
             title="Insert the food image"
             variant="outlined"
             required
-            color="secondary"
             placeholder={"Food image (url)"}
             label="Food image"
             multiline={true}
@@ -97,7 +98,20 @@ const CreateFood = () => {
             margin="normal"
           ></TextFieldWrapper>
           <TextFieldWrapper
-            name="PriceRange"
+            name="price"
+            type="number"
+            inputRef={register}
+            fullWidth={true}
+            id="outlined-image-secondary"
+            title="Insert the food image"
+            variant="outlined"
+            required
+            placeholder={"Food price (NOK)"}
+            label="Food price"
+            margin="normal"
+          ></TextFieldWrapper>
+          <TextFieldWrapper
+            name="price_range"
             inputRef={register}
             id="standard-select-price-range"
             select
@@ -106,6 +120,8 @@ const CreateFood = () => {
             value={priceRange}
             onChange={handleChange}
             helperText="Select food price range"
+            margin="normal"
+            width={"300px"}
           >
             {priceRanges.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -121,7 +137,7 @@ const CreateFood = () => {
               title="Send in form and create food"
               onClick={createNewFood}
             >
-              <Box color={"lightgreen"}>Send</Box>
+              <StyledBox color={"lightgreen"}>Send</StyledBox>
             </Button>
           </ButtonWrapper>
         </FormWrapper>
@@ -149,18 +165,15 @@ const SecondContentWrapper = styled.div`
   display: flex;
 `;
 const TextFieldWrapper = styled(TextField)`
+  color: primary;
   fieldset {
     border-color: white;
     /* background-color: lightgray; */
   }
-  input {
-    ::-webkit-input-placeholder {
-      /* WebKit, Blink, Edge */
-    }
-  }
   ${spacing};
   ${palette};
   ${typography};
+  ${sizing};
 `;
 
 const FormWrapper = styled.form`

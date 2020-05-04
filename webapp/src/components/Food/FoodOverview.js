@@ -1,27 +1,44 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { spacing, palette, typography } from "@material-ui/system";
+import {
+  spacing,
+  palette,
+  typography,
+  sizing,
+  flexbox,
+} from "@material-ui/system";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Box } from "../../shared/StyledSystemComponent";
+
+import { StyledBox } from "../../shared/StyledSystemComponent";
 import {
   CardActionsWrapper,
+  CardWrapper,
   CardActionAreaWrapper,
   CardContentWrapper,
   IWrapper,
   CardMediaWrapper,
   CardWrapperFullWidth,
 } from "../../shared/CardWrapper";
-import { getFoodwithId } from "../../api/foods";
+import { getFoodwithId, deleteFoodWithId } from "../../api/foods";
 
 const FoodOverview = ({ match }) => {
   const foodId = match.params.foodId;
   const [food, setFood] = useState("");
-  const nutritionContent = [
-    "Does this consider as gainz",
-    "Calories",
-    "FDSFSF",
-  ]; // TODOS: Create and get nutrtioncontent from api?
+  const [open, setOpen] = useState(false);
+
+  const toggleDialog = () => {
+    setOpen(!open);
+  };
+  const onAgreeDelete = async () => {
+    setOpen(!open);
+    await deleteFoodWithId(foodId);
+    console.log("Deleted");
+  };
+
   useEffect(() => {
     async function fetchFoodwithId() {
       const food = await getFoodwithId(foodId);
@@ -35,69 +52,67 @@ const FoodOverview = ({ match }) => {
   }
   return (
     <SecondContentWrapper>
-      <CardWrapperFullWidth bgcolor={"cardBackgroundColor"} m={4}>
+      <CardWrapper bgcolor={"cardBackgroundColor"} m={4}>
         <ImgWrapper src={food.image}></ImgWrapper>
 
-        <Box color={"primary"} m={4}>
+        <StyledBox color={"primary"} m={2}>
           {food.name}
-        </Box>
-        {/* <CardActionAreaWrapper>
-          <CardMediaWrapper
-            image={food.image}
-            title={food.name}
-            component="div"
-          />
-          <CardContentWrapper bgcolor={"cardBackgroundColor"}>
-            <Typography variant="body2" color={"primary"} component="div">
-            </Typography>
-          </CardContentWrapper>
-        </CardActionAreaWrapper> */}
+        </StyledBox>
         <CardActionsWrapper bgcolor={"cardBackgroundColor"}>
           <Button size="small" p={1}>
-            <Box color={"secondary"}>Price</Box>
+            <StyledBox color={"secondary"}>Price</StyledBox>
           </Button>
           <Button size="small" p={1}>
-            <Box color={"secondary"}>+ Favourites</Box>
+            <StyledBox color={"secondary"}>+ Favourites</StyledBox>
           </Button>
         </CardActionsWrapper>
-      </CardWrapperFullWidth>
-
-      <CardWrapperFullWidth
-        style={{ marginTop: 40, marginRight: 40, width: "100%" }}
+      </CardWrapper>
+      <StyledBox display={"flex"} justifyContent={"center"}>
+        <StyledButton
+          variant="contained"
+          color="secondary"
+          width={100}
+          onClick={toggleDialog}
+        >
+          Delete
+        </StyledButton>
+      </StyledBox>
+      <Dialog
+        open={open}
+        onClose={toggleDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <CardActionAreaWrapper>
-          <CardContentWrapper>
-            <Typography variant="body2" component="div">
-              <Box>
-                <h1>Nutrition content</h1>
-              </Box>
-            </Typography>
-          </CardContentWrapper>
-        </CardActionAreaWrapper>
-        {nutritionContent.map((
-          content /* apply key attribute to each child */
-        ) => (
-          <CardActionsWrapper>
-            <Typography variant="body2" color={"primary"} component="div">
-              <Box p={2}>{content}</Box>
-            </Typography>
-          </CardActionsWrapper>
-        ))}
-      </CardWrapperFullWidth>
+        <DialogTitle id="alert-dialog-title">
+          {"Are you sure you want to delete this food?"}
+        </DialogTitle>
+
+        <DialogActions>
+          <Button onClick={toggleDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={onAgreeDelete} color="primary" autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </SecondContentWrapper>
   );
 };
 
-const Wrapper = styled.div`
+const StyledButton = styled(Button)`
   ${spacing};
   ${palette};
   ${typography};
+  ${sizing};
+  ${flexbox};
 `;
 const SecondContentWrapper = styled.div`
   ${spacing};
   ${palette};
   ${typography};
   display: flex;
+  flex-direction: column;
 `;
 const ImgWrapper = styled.img`
   max-height: 500px;

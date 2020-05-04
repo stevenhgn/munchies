@@ -12,7 +12,6 @@ const IWrapper = styled.i`
 `;
 const CardWrapper = styled(Card)`
   margin: 10px;
-  max-width: 500px;
   ${spacing};
   ${palette};
 `;
