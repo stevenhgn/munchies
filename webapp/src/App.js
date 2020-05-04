@@ -11,7 +11,7 @@ import FoodOverview from "./components/Food/FoodOverview";
 import CreateFood from "./components/Food/CreateFood";
 import { LinkWrapper } from "./shared/StyledSystemComponent";
 import { spacing, palette, typography } from "@material-ui/system";
-import { IWrapper } from "./shared/CardWrapper";
+import css from "./App.css";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -38,33 +38,38 @@ class App extends React.Component {
         <ThemeContext.Provider value={this.state}>
           <ThemeProvider theme={this.state.theme}>
             <Router>
-              <Header>
-                <LinkWrapper to="/">
-                  <HWrapper>Munchies</HWrapper>
-                </LinkWrapper>
-                <LinkWrapper to="/createFood">
-                  <StyledButton color={"primary"} style={{ marginTop: "20px" }}>
-                    Create Food
-                  </StyledButton>
-                </LinkWrapper>
-                <ThemeContext.Consumer>
-                  {({ theme, toggleTheme }) => (
-                    <Button
-                      style={{ position: "absolute", right: 0 }}
-                      onClick={toggleTheme}
+              <AppContent p={4}>
+                <Header>
+                  <LinkWrapper to="/">
+                    <Logo color={"logo"}>MUNCHIES</Logo>
+                  </LinkWrapper>
+                  <LinkWrapper to="/createFood">
+                    <StyledButton
+                      color={"primary"}
+                      style={{ marginTop: "20px" }}
                     >
-                      {this.state.themeString}
-                    </Button>
-                  )}
-                </ThemeContext.Consumer>
-              </Header>
-              <Switch>
-                <Route path="/food/:foodId" component={FoodOverview} />
-                <Route path="/createFood" component={CreateFood} />
-                <Route path="/">
-                  <Home color={this.state.theme} />
-                </Route>
-              </Switch>
+                      Create Food
+                    </StyledButton>
+                  </LinkWrapper>
+                  <ThemeContext.Consumer>
+                    {({ theme, toggleTheme }) => (
+                      <Button
+                        style={{ position: "absolute", right: 0 }}
+                        onClick={toggleTheme}
+                      >
+                        {this.state.themeString}
+                      </Button>
+                    )}
+                  </ThemeContext.Consumer>
+                </Header>
+                <Switch>
+                  <Route path="/food/:foodId" component={FoodOverview} />
+                  <Route path="/createFood" component={CreateFood} />
+                  <Route path="/">
+                    <Home color={this.state.theme} />
+                  </Route>
+                </Switch>
+              </AppContent>
             </Router>
           </ThemeProvider>
         </ThemeContext.Provider>
@@ -72,9 +77,10 @@ class App extends React.Component {
     );
   }
 }
-const HWrapper = styled.h1`
+const Logo = styled.h1`
   ${spacing};
   ${palette};
+  font-family: "Sansita", sans-serif;
 `;
 const Header = styled.div`
   ${spacing};
@@ -87,8 +93,11 @@ const Header = styled.div`
 const Wrapper = styled.div`
   ${spacing};
   ${palette};
-
-  /* color: ${(props) => props.color}; */
+`;
+const AppContent = styled.div`
+  ${spacing};
+  max-width: 1280px;
+  margin: auto;
 `;
 // TODOS: Design dark/light mode button
 const StyledButton = styled(Button)`

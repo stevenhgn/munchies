@@ -11,7 +11,6 @@ const IWrapper = styled.i`
   ${palette};
 `;
 const CardWrapper = styled(Card)`
-  margin: 10px;
   ${spacing};
   ${palette};
 `;
@@ -40,7 +39,6 @@ const CardContentWrapper = styled(CardContent)`
   ${spacing};
   ${palette};
   ${typography};
-  opacity: 95%;
 `;
 const CardMediaWrapper = styled(CardMedia)`
   height: 150px;

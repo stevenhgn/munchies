@@ -16,7 +16,7 @@ import { StyledBox } from "../../shared/StyledSystemComponent";
 const useStyles = makeStyles({
   root: {
     minWidth: 300,
-    maxWidth: 500,
+    // maxWidth: 500,
   },
   media: {
     height: 150,
@@ -38,31 +38,19 @@ const CardElement = (props) => {
         />
         <CardContentWrapper bgcolor={"cardBackgroundColor"}>
           <Typography variant="body2" color={"primary"} component="div">
-            <StyledBox color={"primary"}>{props.name}</StyledBox>
-            <StyledBox color={"third"}>{props.price} kr</StyledBox>
+            <StyledBox color={"black"}>{props.name}</StyledBox>
+            <StyledBox color={"black"}>{props.price} kr</StyledBox>
             <StyledBox>
-              <IWrapper
-                p={2}
-                color={"lightgreen"}
+              <StyledBox
+                color={"money"}
                 style={{ position: "absolute", right: 20, bottom: 10 }}
               >
                 {priceRange}
-              </IWrapper>
+              </StyledBox>
             </StyledBox>
           </Typography>
         </CardContentWrapper>
       </CardActionAreaWrapper>
-      <CardActionsWrapper bgcolor={"cardBackgroundColor"}>
-        {/* <Button size="small">
-          <StyledBox color={"secondary"}>Share</StyledBox>
-        </Button> */}
-        <Button size="small" p={1}>
-          <StyledBox color={"secondary"}>Details</StyledBox>
-        </Button>
-        <Button size="small" p={1}>
-          <StyledBox color={"secondary"}>+ Favourites</StyledBox>
-        </Button>
-      </CardActionsWrapper>
     </CardWrapper>
   );
 };
