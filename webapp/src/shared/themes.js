@@ -4,11 +4,12 @@ const themes = {
   light: {
     spacing: 4,
     palette: {
-      primary: "#007bff",
-      secondary: "palevioletred",
+      primary: "black",
+      secondary: "#E53935",
       third: "#ff634d",
       logo: "#FCE7E7",
       money: "#27AE60",
+      inputColor: "#42A5F5",
       interaction: "#FFE898",
       priceRange: "#ffaaaa",
       backgroundColor: "#C62828",
@@ -24,6 +25,7 @@ const themes = {
       third: "white",
       priceRange: "darkgray",
       // backgroundColor_two: "#081B33",
+      money: "#27AE60",
 
       //https://material.io/design/color/dark-theme.html#properties
       backgroundColor: "#1F1A24", // Material reccommended dark theme surface color

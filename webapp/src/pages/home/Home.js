@@ -24,7 +24,7 @@ var Home = (props) => {
     <Wrapper>
       <Grid container spacing={3}>
         {foods.map((food) => (
-          <Grid item>
+          <Grid item key={food._id}>
             <LinkWrapper to={"/food/" + food._id} key={food._id}>
               <CardElement
                 key={food._id}

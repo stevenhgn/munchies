@@ -10,10 +10,15 @@ import {
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-import { StyledBox } from "../../shared/StyledSystemComponent";
+import {
+  StyledBox,
+  LinkWrapper,
+  StyledButtonPrimary,
+  StyledButtonDelete,
+  ButtonWrapper,
+} from "../../shared/StyledSystemComponent";
 import {
   CardActionsWrapper,
   CardWrapper,
@@ -47,6 +52,7 @@ const FoodOverview = ({ match }) => {
     fetchFoodwithId();
   }, []);
 
+  const editFood = () => {};
   if (food === null) {
     return <h1>Fetching food with id: {foodId}...</h1>; // Displaying loading process as long as there are no food available.
   }
@@ -67,16 +73,29 @@ const FoodOverview = ({ match }) => {
           </Button>
         </CardActionsWrapper>
       </CardWrapper>
-      <StyledBox display={"flex"} justifyContent={"center"}>
-        <StyledButton
+      <ButtonWrapper>
+        <LinkWrapper to={"/createFood/" + foodId} key={foodId}>
+          <ButtonWrapper color="white">
+            <StyledButtonPrimary
+              variant="contained"
+              color="inherit"
+              width={100}
+              onClick={editFood}
+            >
+              Edit
+            </StyledButtonPrimary>
+          </ButtonWrapper>
+        </LinkWrapper>
+
+        <StyledButtonDelete
           variant="contained"
           color="secondary"
           width={100}
           onClick={toggleDialog}
         >
           Delete
-        </StyledButton>
-      </StyledBox>
+        </StyledButtonDelete>
+      </ButtonWrapper>
       <Dialog
         open={open}
         onClose={toggleDialog}
@@ -106,6 +125,9 @@ const StyledButton = styled(Button)`
   ${typography};
   ${sizing};
   ${flexbox};
+  &.MuiButton-containedSecondary {
+    margin-left: 10px;
+  }
 `;
 const SecondContentWrapper = styled.div`
   ${spacing};

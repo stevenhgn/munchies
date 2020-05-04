@@ -38,8 +38,8 @@ const CardElement = (props) => {
         />
         <CardContentWrapper bgcolor={"cardBackgroundColor"}>
           <Typography variant="body2" color={"primary"} component="div">
-            <StyledBox color={"black"}>{props.name}</StyledBox>
-            <StyledBox color={"black"}>{props.price} kr</StyledBox>
+            <StyledBox color={"primary"}>{props.name}</StyledBox>
+            <StyledBox color={"primary"}>{props.price} kr</StyledBox>
             <StyledBox>
               <StyledBox
                 color={"money"}

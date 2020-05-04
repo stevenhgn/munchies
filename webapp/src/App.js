@@ -53,18 +53,18 @@ class App extends React.Component {
                   </LinkWrapper>
                   <ThemeContext.Consumer>
                     {({ theme, toggleTheme }) => (
-                      <Button
+                      <StyledButton
                         style={{ position: "absolute", right: 0 }}
                         onClick={toggleTheme}
                       >
                         {this.state.themeString}
-                      </Button>
+                      </StyledButton>
                     )}
                   </ThemeContext.Consumer>
                 </Header>
                 <Switch>
                   <Route path="/food/:foodId" component={FoodOverview} />
-                  <Route path="/createFood" component={CreateFood} />
+                  <Route path="/createFood/:foodId?" component={CreateFood} />
                   <Route path="/">
                     <Home color={this.state.theme} />
                   </Route>

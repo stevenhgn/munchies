@@ -63,6 +63,7 @@ exports.update = function(req, res) {
   });
 };
 // Handle delete food
+// TODOS: Remove the actual deletion and only "tag" it as deleted.
 exports.delete = function(req, res) {
   Food.remove(
     {
