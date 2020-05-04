@@ -16,6 +16,7 @@ import {
   ButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
+  ButtonArea,
 } from "../../shared/StyledSystemComponent";
 
 const CreateFood = ({ match }) => {
@@ -57,9 +58,6 @@ const CreateFood = ({ match }) => {
     if (match.params.foodId != null || match.params.foodId != undefined) {
       console.log("Id found ", match.params.foodId);
       fetchFoodwithId();
-    } else {
-      console.log("no id found");
-      setFood("");
     }
   }, []);
 
@@ -169,17 +167,19 @@ const CreateFood = ({ match }) => {
             ))}
           </TextFieldWrapper>
           {editMode ? (
-            <ButtonWrapper color="white">
-              <StyledButtonPrimary
-                type="submit"
-                variant="contained"
-                size="large"
-                color="inherit"
-                p={1}
-                title="Edit food"
-              >
-                UPDATE
-              </StyledButtonPrimary>
+            <ButtonArea color="white">
+              <ButtonWrapper mr={5}>
+                <StyledButtonPrimary
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  color="inherit"
+                  p={1}
+                  title="Edit food"
+                >
+                  UPDATE
+                </StyledButtonPrimary>
+              </ButtonWrapper>
               <LinkWrapper to={"/food/" + food._id} key={food._id}>
                 <StyledButtonSecondary
                   type="submit"
@@ -192,19 +192,21 @@ const CreateFood = ({ match }) => {
                   <StyledBox color={"primary"}>CANCEL</StyledBox>
                 </StyledButtonSecondary>
               </LinkWrapper>
-            </ButtonWrapper>
+            </ButtonArea>
           ) : (
-            <ButtonWrapper color="white">
-              <StyledButtonPrimary
-                type="submit"
-                variant="contained"
-                size="large"
-                color="inherit"
-                p={1}
-                title="Send in form and create food"
-              >
-                CREATE
-              </StyledButtonPrimary>
+            <ButtonArea color="white">
+              <ButtonWrapper mr={5}>
+                <StyledButtonPrimary
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  color="inherit"
+                  p={1}
+                  title="Send in form and create food"
+                >
+                  CREATE
+                </StyledButtonPrimary>
+              </ButtonWrapper>
               <LinkWrapper to={"/"}>
                 <StyledButtonSecondary
                   type="submit"
@@ -217,7 +219,7 @@ const CreateFood = ({ match }) => {
                   <StyledBox color={"primary"}>CANCEL</StyledBox>
                 </StyledButtonSecondary>
               </LinkWrapper>
-            </ButtonWrapper>
+            </ButtonArea>
           )}
         </FormWrapper>
       </CardWrapperFullWidth>

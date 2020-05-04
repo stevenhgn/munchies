@@ -16,6 +16,13 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+const ButtonArea = styled.div`
+  ${spacing};
+  ${palette};
+  ${typography};
+  display: flex;
+  justify-content: center;
+`;
 
 const LinkWrapper = styled(Link)`
   text-decoration: none;
@@ -30,14 +37,17 @@ const StyledButtonPrimary = styled(Button)`
   ${palette};
   ${typography};
   ${sizing};
-  &.MuiButton-containedSecondary {
+  /* &.MuiButton-containedSecondary {
     margin-left: 10px;
   }
   &.MuiButton-containedSizeLarge {
     margin-left: 10px;
-  }
+  } */
   &.MuiButton-contained {
     background-color: ${themes.light.palette.inputColor};
+    &:hover {
+      background-color: ${themes.light.palette.inputColor};
+    }
   }
 `;
 const StyledButtonSecondary = styled(Button)`
@@ -45,26 +55,24 @@ const StyledButtonSecondary = styled(Button)`
   ${palette};
   ${typography};
   ${sizing};
-  &.MuiButton-containedSecondary {
-    margin-left: 10px;
-  }
-  &.MuiButton-containedSizeLarge {
-    margin-left: 10px;
-  }
+  background-color: transparent;
 `;
 const StyledButtonDelete = styled(Button)`
   ${spacing};
   ${palette};
   ${typography};
   ${sizing};
-  &.MuiButton-containedSecondary {
+  /* &.MuiButton-containedSecondary {
     margin-left: 10px;
   }
   &.MuiButton-containedSizeLarge {
     margin-left: 10px;
-  }
+  } */
   &.MuiButton-contained {
     background-color: ${themes.light.palette.secondary};
+    &:hover {
+      background-color: ${themes.light.palette.secondary};
+    }
   }
 `;
 export {
@@ -75,4 +83,5 @@ export {
   StyledButtonSecondary,
   StyledButtonDelete,
   ButtonWrapper,
+  ButtonArea,
 };

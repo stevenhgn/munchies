@@ -18,6 +18,7 @@ import {
   StyledButtonPrimary,
   StyledButtonDelete,
   ButtonWrapper,
+  ButtonArea,
 } from "../../shared/StyledSystemComponent";
 import {
   CardActionsWrapper,
@@ -73,9 +74,9 @@ const FoodOverview = ({ match }) => {
           </Button>
         </CardActionsWrapper>
       </CardWrapper>
-      <ButtonWrapper>
+      <ButtonArea>
         <LinkWrapper to={"/createFood/" + foodId} key={foodId}>
-          <ButtonWrapper color="white">
+          <ButtonWrapper color="white" mr={5}>
             <StyledButtonPrimary
               variant="contained"
               color="inherit"
@@ -95,7 +96,7 @@ const FoodOverview = ({ match }) => {
         >
           Delete
         </StyledButtonDelete>
-      </ButtonWrapper>
+      </ButtonArea>
       <Dialog
         open={open}
         onClose={toggleDialog}
@@ -119,16 +120,6 @@ const FoodOverview = ({ match }) => {
   );
 };
 
-const StyledButton = styled(Button)`
-  ${spacing};
-  ${palette};
-  ${typography};
-  ${sizing};
-  ${flexbox};
-  &.MuiButton-containedSecondary {
-    margin-left: 10px;
-  }
-`;
 const SecondContentWrapper = styled.div`
   ${spacing};
   ${palette};
