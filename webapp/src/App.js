@@ -9,8 +9,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import FoodOverview from "./components/Food/FoodOverview";
 import CreateFood from "./components/Food/CreateFood";
-import { LinkWrapper, StyledBox } from "./shared/StyledSystemComponent";
-import { spacing, palette, typography } from "@material-ui/system";
+import { LinkWrapper, StyledBox, Logo } from "./shared/StyledSystemComponent";
+import { spacing, palette, typography, sizing } from "@material-ui/system";
 import css from "./App.css";
 class App extends React.Component {
   constructor(props) {
@@ -41,7 +41,12 @@ class App extends React.Component {
               <AppContent p={4}>
                 <Header>
                   <LinkWrapper to="/">
-                    <Logo color={"logo"}>MUNCHIES</Logo>
+                    <Logo color={"logo"} fontSize={60}>
+                      MUNCHIES
+                    </Logo>
+                    <StyledBox color={"logo"} fontSize={30}>
+                      ! hungry
+                    </StyledBox>
                   </LinkWrapper>
                   <ThemeContext.Consumer>
                     {({ theme, toggleTheme }) => (
@@ -75,11 +80,6 @@ class App extends React.Component {
     );
   }
 }
-const Logo = styled.h1`
-  ${spacing};
-  ${palette};
-  font-family: "Sansita", sans-serif;
-`;
 // TODOS: Design dark/light mode button
 const StyledThemeModeButton = styled(Button)`
   ${spacing};

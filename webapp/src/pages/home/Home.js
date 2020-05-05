@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CardElement from "../../components/Card/Card";
-import { spacing, palette, typography, display } from "@material-ui/system";
+import { spacing, palette, typography, sizing } from "@material-ui/system";
 import styled from "styled-components";
 import ThemeContext from "../../theme-context";
 import { getFoods } from "../../api/foods";
@@ -8,14 +8,20 @@ import {
   LinkWrapper,
   StyledButtonInteraction,
   ButtonWrapper,
-  StyledButtonPrimary,
+  StyledBoxRowFlex,
   StyledBox,
   StyledAddCircle,
+  StyledChip,
 } from "../../shared/StyledSystemComponent";
 import Grid from "@material-ui/core/Grid";
 import themes from "../../shared/themes";
 var Home = (props) => {
   const [foods, setFoods] = useState([]);
+  const [chipData, setChipData] = useState([
+    { key: 1, label: "$ (0-75 NOK)", clicked: false },
+    { key: 2, label: "$$ (75-150 NOK)", clicked: false },
+    { key: 3, label: "$$$ (150-300 NOK)", clicked: false },
+  ]);
   useEffect(() => {
     async function fetchFood() {
       const foods = await getFoods();
@@ -27,9 +33,28 @@ var Home = (props) => {
     return <h1>Fetching foods...</h1>; // Displaying loading process as long as there are no food available.
   }
 
+  const handleClick = (chipClicked) => () => {
+    chipClicked.clicked = !chipClicked.clicked;
+    setChipData((chips) => chips.filter((chip) => chip.key != null)); // TODOS: Is this the best solution?
+    // TODOS: Handle filtering here
+  };
   return (
     <Wrapper>
-      <StyledBox mb={4}>
+      <StyledBoxRowFlex mt={5}>
+        {chipData.map((chip) => (
+          <AWrapper key={chip.key * -2} mr={3}>
+            <StyledChip
+              variant="default"
+              size="medium"
+              label={chip.label}
+              key={chip.key}
+              color={chip.clicked ? "primary" : "default"}
+              onClick={handleClick(chip)}
+            />
+          </AWrapper>
+        ))}
+      </StyledBoxRowFlex>
+      <StyledBox mb={4} mt={4}>
         <LinkWrapper to="/createFood">
           <StyledButtonInteraction variant="text">
             <StyledAddCircle mr={1} size={25} color={"interaction"} />
@@ -57,7 +82,11 @@ var Home = (props) => {
     </Wrapper>
   );
 };
-
+const AWrapper = styled.a`
+  ${spacing};
+  ${palette};
+  ${sizing};
+`;
 const Wrapper = styled.div`
   flex-wrap: wrap;
   flex-direction: column;

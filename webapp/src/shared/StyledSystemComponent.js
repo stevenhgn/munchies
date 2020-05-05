@@ -5,8 +5,20 @@ import { Typography, Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import themes from "../shared/themes";
 import { PlusCircle } from "@styled-icons/boxicons-solid/";
+import { Chip } from "@material-ui/core";
 
 const StyledBox = styled(Box)`
+  ${spacing}
+  ${palette}
+`;
+const Logo = styled(Box)`
+  ${spacing}
+  ${palette}
+  ${sizing};
+  font-family: "Sansita", sans-serif;
+
+`;
+const StyledBoxRowFlex = styled(Box)`
   ${spacing}
   ${palette}
 `;
@@ -88,8 +100,15 @@ const StyledButtonInteraction = styled(Button)`
     }
   }
 `;
+const StyledChip = styled(Chip)`
+  ${spacing};
+  ${palette};
+  ${sizing};
+`;
+
 export {
   StyledBox,
+  StyledBoxRowFlex,
   LinkWrapper,
   StyledTypography,
   StyledButtonPrimary,
@@ -99,4 +118,6 @@ export {
   ButtonArea,
   StyledButtonInteraction,
   StyledAddCircle,
+  StyledChip,
+  Logo,
 };
