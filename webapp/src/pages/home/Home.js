@@ -5,8 +5,8 @@ import styled from "styled-components";
 import ThemeContext from "../../theme-context";
 import { getFoods } from "../../api/foods";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { LinkWrapper } from "../../shared/Box";
-
+import { LinkWrapper } from "../../shared/StyledSystemComponent";
+import Grid from "@material-ui/core/Grid";
 var Home = (props) => {
   const [foods, setFoods] = useState([]);
   useEffect(() => {
@@ -22,32 +22,34 @@ var Home = (props) => {
 
   return (
     <Wrapper>
-      <CardList>
+      <Grid container spacing={3}>
         {foods.map((food) => (
-          <LinkWrapper to={"/food/" + food._id} key={food._id}>
-            <CardElement
-              key={food._id}
-              name={food.name}
-              image={food.image}
-              price={food.price}
-              price_range={food.price_range}
-            />
-          </LinkWrapper>
+          <Grid item key={food._id}>
+            <LinkWrapper to={"/food/" + food._id} key={food._id}>
+              <CardElement
+                key={food._id}
+                name={food.name}
+                image={food.image}
+                price={food.price}
+                price_range={food.price_range}
+              />
+            </LinkWrapper>
+          </Grid>
         ))}
-      </CardList>
+      </Grid>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  /* ${spacing};
-  ${palette}; */
   flex-wrap: wrap;
   flex-direction: column;
   display: flex;
 `;
 
 const CardList = styled.div`
+  ${spacing};
+  ${palette};
   flex-wrap: wrap;
   flex-direction: row;
   display: flex;

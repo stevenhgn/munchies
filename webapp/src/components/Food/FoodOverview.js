@@ -1,29 +1,50 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { spacing, palette, typography } from "@material-ui/system";
-import Typography from "@material-ui/core/Typography";
+import {
+  spacing,
+  palette,
+  typography,
+  sizing,
+  flexbox,
+} from "@material-ui/system";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import { Box } from "../../shared/Box";
+
+import {
+  StyledBox,
+  LinkWrapper,
+  StyledButtonPrimary,
+  StyledButtonDelete,
+  ButtonWrapper,
+  ButtonArea,
+} from "../../shared/StyledSystemComponent";
 import {
   CardActionsWrapper,
+  CardWrapper,
   CardActionAreaWrapper,
   CardContentWrapper,
   IWrapper,
   CardMediaWrapper,
   CardWrapperFullWidth,
-  useStyles,
 } from "../../shared/CardWrapper";
-import { getFoodwithId } from "../../api/foods";
+import { getFoodwithId, deleteFoodWithId } from "../../api/foods";
 
 const FoodOverview = ({ match }) => {
-  const classes = useStyles();
   const foodId = match.params.foodId;
   const [food, setFood] = useState("");
-  const nutritionContent = [
-    "Does this consider as gainz",
-    "Calories",
-    "FDSFSF",
-  ]; // TODOS: Create and get nutrtioncontent from api?
+  const [open, setOpen] = useState(false);
+
+  const toggleDialog = () => {
+    setOpen(!open);
+  };
+  const onAgreeDelete = async () => {
+    setOpen(!open);
+    await deleteFoodWithId(foodId);
+    console.log("Deleted");
+  };
+
   useEffect(() => {
     async function fetchFoodwithId() {
       const food = await getFoodwithId(foodId);
@@ -32,92 +53,83 @@ const FoodOverview = ({ match }) => {
     fetchFoodwithId();
   }, []);
 
+  const editFood = () => {};
   if (food === null) {
     return <h1>Fetching food with id: {foodId}...</h1>; // Displaying loading process as long as there are no food available.
   }
-  // TODOS: Send a get request to the api to get the food with foodId
   return (
-    <Wrapper // TODOS: This is just a test background color wrapper, remove later??
-      bgcolor={"backgroundColor"}
-      style={{
-        position: "absolute",
-        top: 90,
-        left: 0,
-        bottom: 0,
-        right: 0,
-      }}
-    >
-      <SecondContentWrapper>
-        <CardWrapperFullWidth
-          bgcolor={"cardBackgroundColor"}
-          style={{
-            /*REMOVE */
-            marginLeft: 100,
-            marginRight: 50,
-            marginTop: 100,
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <CardActionAreaWrapper>
-            <CardMediaWrapper
-              className={classes.media}
-              image={food.image}
-              title={food.name}
-              component="div"
-            />
-            <CardContentWrapper bgcolor={"cardBackgroundColor"}>
-              <Typography variant="body2" color={"primary"} component="div">
-                <Box color={"primary"}>{food.name}</Box>
-              </Typography>
-            </CardContentWrapper>
-          </CardActionAreaWrapper>
-          <CardActionsWrapper bgcolor={"cardBackgroundColor"}>
-            <Button size="small" p={1}>
-              <Box color={"secondary"}>Price</Box>
-            </Button>
-            <Button size="small" p={1}>
-              <Box color={"secondary"}>+ Favourites</Box>
-            </Button>
-          </CardActionsWrapper>
-        </CardWrapperFullWidth>
+    <SecondContentWrapper>
+      <CardWrapper bgcolor={"cardBackgroundColor"} m={4}>
+        <ImgWrapper src={food.image}></ImgWrapper>
 
-        <CardWrapperFullWidth
-          style={{ marginTop: 40, marginRight: 40, width: "100%" }}
+        <StyledBox color={"primary"} m={2}>
+          {food.name}
+        </StyledBox>
+        <CardActionsWrapper bgcolor={"cardBackgroundColor"}>
+          <Button size="small" p={1}>
+            <StyledBox color={"secondary"}>Price</StyledBox>
+          </Button>
+          <Button size="small" p={1}>
+            <StyledBox color={"secondary"}>+ Favourites</StyledBox>
+          </Button>
+        </CardActionsWrapper>
+      </CardWrapper>
+      <ButtonArea>
+        <LinkWrapper to={"/createFood/" + foodId} key={foodId}>
+          <ButtonWrapper color="white" mr={5}>
+            <StyledButtonPrimary
+              variant="contained"
+              color="inherit"
+              width={100}
+              onClick={editFood}
+            >
+              Edit
+            </StyledButtonPrimary>
+          </ButtonWrapper>
+        </LinkWrapper>
+
+        <StyledButtonDelete
+          variant="contained"
+          color="secondary"
+          width={100}
+          onClick={toggleDialog}
         >
-          <CardActionAreaWrapper>
-            <CardContentWrapper>
-              <Typography variant="body2" component="div">
-                <Box>
-                  <h1>Nutrition content</h1>
-                </Box>
-              </Typography>
-            </CardContentWrapper>
-          </CardActionAreaWrapper>
-          {nutritionContent.map((
-            content /* apply key attribute to each child */
-          ) => (
-            <CardActionsWrapper>
-              <Typography variant="body2" color={"primary"} component="div">
-                <Box p={2}>{content}</Box>
-              </Typography>
-            </CardActionsWrapper>
-          ))}
-        </CardWrapperFullWidth>
-      </SecondContentWrapper>
-    </Wrapper>
+          Delete
+        </StyledButtonDelete>
+      </ButtonArea>
+      <Dialog
+        open={open}
+        onClose={toggleDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you sure you want to delete this food?"}
+        </DialogTitle>
+
+        <DialogActions>
+          <Button onClick={toggleDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={onAgreeDelete} color="primary" autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </SecondContentWrapper>
   );
 };
 
-const Wrapper = styled.div`
-  ${spacing};
-  ${palette};
-  ${typography};
-`;
 const SecondContentWrapper = styled.div`
   ${spacing};
   ${palette};
   ${typography};
   display: flex;
+  flex-direction: column;
+`;
+const ImgWrapper = styled.img`
+  max-height: 500px;
+  width: 100%;
+  object-fit: cover;
 `;
 export default FoodOverview;

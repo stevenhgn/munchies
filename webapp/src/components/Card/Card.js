@@ -11,12 +11,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Box } from "../../shared/Box";
+import { StyledBox } from "../../shared/StyledSystemComponent";
 
 const useStyles = makeStyles({
   root: {
     minWidth: 300,
-    maxWidth: 500,
+    // maxWidth: 500,
   },
   media: {
     height: 150,
@@ -38,31 +38,19 @@ const CardElement = (props) => {
         />
         <CardContentWrapper bgcolor={"cardBackgroundColor"}>
           <Typography variant="body2" color={"primary"} component="div">
-            <Box color={"primary"}>{props.name}</Box>
-            <Box color={"third"}>{props.price} kr</Box>
-            <Box>
-              <IWrapper
-                p={2}
-                color={"lightgreen"}
+            <StyledBox color={"primary"}>{props.name}</StyledBox>
+            <StyledBox color={"primary"}>{props.price} kr</StyledBox>
+            <StyledBox>
+              <StyledBox
+                color={"money"}
                 style={{ position: "absolute", right: 20, bottom: 10 }}
               >
                 {priceRange}
-              </IWrapper>
-            </Box>
+              </StyledBox>
+            </StyledBox>
           </Typography>
         </CardContentWrapper>
       </CardActionAreaWrapper>
-      <CardActionsWrapper bgcolor={"cardBackgroundColor"}>
-        {/* <Button size="small">
-          <Box color={"secondary"}>Share</Box>
-        </Button> */}
-        <Button size="small" p={1}>
-          <Box color={"secondary"}>Details</Box>
-        </Button>
-        <Button size="small" p={1}>
-          <Box color={"secondary"}>+ Favourites</Box>
-        </Button>
-      </CardActionsWrapper>
     </CardWrapper>
   );
 };

@@ -1,152 +1,232 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { spacing, palette, typography } from "@material-ui/system";
-import Typography from "@material-ui/core/Typography";
+import { spacing, palette, typography, sizing } from "@material-ui/system";
 import Button from "@material-ui/core/Button";
-import { Box } from "../../shared/Box";
-import PropTypes from "prop-types";
-
 import {
-  CardActionsWrapper,
-  CardActionAreaWrapper,
-  CardContentWrapper,
-  IWrapper,
-  CardMediaWrapper,
-  CardWrapperFullWidth,
-  useStyles,
-} from "../../shared/CardWrapper";
-import { createNewFood } from "../../api/foods";
+  StyledBox,
+  StyledTypography,
+} from "../../shared/StyledSystemComponent";
+import themes from "../../shared/themes";
+import { CardWrapperFullWidth } from "../../shared/CardWrapper";
+import { createNewFood, getFoodwithId, updateFood } from "../../api/foods";
 import { TextField, MenuItem } from "@material-ui/core";
-const CreateFood = () => {
-  const classes = useStyles();
+import { useForm } from "react-hook-form";
+import {
+  LinkWrapper,
+  ButtonWrapper,
+  StyledButtonPrimary,
+  StyledButtonSecondary,
+  ButtonArea,
+} from "../../shared/StyledSystemComponent";
 
+const CreateFood = ({ match }) => {
   const [food, setFood] = useState("");
+  const foodId = match.params ? match.params.foodId : null;
+  const [priceRange, setPriceRange] = React.useState(1);
   const priceRanges = [
     {
       value: 1,
-      label: "$",
+      label: "$ (0-75 NOK)",
     },
     {
       value: 2,
-      label: "$$",
+      label: "$$ (75-150 NOK)",
     },
     {
       value: 3,
-      label: "$$$",
+      label: "$$$ (150-300 NOK)",
     },
   ];
-  const [priceRange, setPriceRange] = React.useState(1);
+
+  const { register, handleSubmit, setValue, setError } = useForm({
+    defaultValues: {
+      name: "",
+      image: "",
+      price: 0,
+      price_range: priceRange,
+    },
+  });
+  useEffect(() => {
+    async function fetchFoodwithId() {
+      const food = await getFoodwithId(foodId);
+      setFood(food);
+      setValue("name", food.name);
+      setValue("image", food.image);
+      setValue("price", food.price);
+      setPriceRange(food.price_range); // set the selection of price_range if food is found
+    }
+    if (match.params.foodId != null || match.params.foodId != undefined) {
+      console.log("Id found ", match.params.foodId);
+      fetchFoodwithId();
+    }
+  }, []);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    console.log(priceRange);
+    const reqBody = {
+      name: name,
+      price: data.price,
+      price_range: priceRange,
+      image: data.image,
+    };
+    createNewFood(reqBody); // call axios api call to create new food with reqBody as data
+  };
 
   const handleChange = (event) => {
     // handle pricerange select change
     setPriceRange(event.target.value);
   };
+  console.log("food", food);
+  // setPriceRange(food.priceRange);
+  const editMode = !!foodId;
+  console.log("object", foodId);
   return (
-    <Wrapper
-      bgcolor={"backgroundColor"}
-      style={{
-        position: "absolute",
-        top: 90,
-        left: 0,
-        bottom: 0,
-        right: 0,
-      }}
-    >
-      <SecondContentWrapper>
-        <CardWrapperFullWidth
-          style={{
-            /*REMOVE */
-            marginLeft: 160,
-            marginRight: 160,
-            marginTop: 100,
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <CardActionAreaWrapper>
-            <CardContentWrapper bgcolor={"cardBackgroundColor"}>
-              <Typography variant="body2" component="div">
-                <Box color={"primary"}>Create your own food</Box>
-              </Typography>
-            </CardContentWrapper>
-          </CardActionAreaWrapper>
-          <CardActionsWrapper
-            bgcolor={"cardBackgroundColor"}
-            style={{
-              flexDirection: "column",
-            }}
+    <SecondContentWrapper>
+      <CardWrapperFullWidth m={16}>
+        <StyledTypography variant="h5" p={5}>
+          {editMode ? "Edit food" : "Create your own food"}
+        </StyledTypography>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)} pl={5} pr={5} pb={5}>
+          <TextFieldWrapper
+            name="name"
+            inputRef={register}
+            id="filled-name-primary"
+            fullWidth={true}
+            title="Insert the food name"
+            variant="filled"
+            required
+            placeholder={"Food name"}
+            label="Food name"
+            type="input"
+            margin="normal"
+            focused={!!editMode}
+          ></TextFieldWrapper>
+          {/* <TextFieldWrapper
+            inputRef={register}
+            name="FoodDescription"
+            fullWidth={true}
+            id="outlined-descrip-secondary"
+            title="Insert the food description"
+            variant="outlined"
+            required
+            placeholder={"Food description"}
+            label="Food description"
+            multiline={true}
+            type="text"
+            margin="normal"
+          ></TextFieldWrapper> */}
+          <TextFieldWrapper
+            name="image"
+            inputRef={register}
+            focused={!!editMode}
+            fullWidth
+            id="filled-image-secondary"
+            rows="2"
+            title="Insert the food image"
+            variant="filled"
+            required
+            placeholder={"Food image (url)"}
+            label="Food image"
+            multiline={true}
+            type="text"
+            margin="normal"
+          ></TextFieldWrapper>
+          <TextFieldWrapper
+            name="price"
+            type="number"
+            inputRef={register}
+            fullWidth={true}
+            id="filled-image-secondary"
+            title="Insert the food image"
+            variant="filled"
+            required
+            placeholder={"Food price (NOK)"}
+            label="Food price"
+            margin="normal"
+            focused={!!editMode}
+          ></TextFieldWrapper>
+          <TextFieldWrapper
+            name="price_range"
+            inputRef={register}
+            id="standard-select-price-range"
+            select
+            variant="filled"
+            label="Select"
+            value={priceRange}
+            onChange={handleChange}
+            helperText="Select food price range"
+            margin="normal"
+            width={"300px"}
+            focused={!!editMode}
           >
-            {/* <Box style={{ marginLeft: "120px", marginRight: "120px" }}> */}
-            <TextFieldWrapper
-              className={classes.root}
-              InputProps={{ className: classes.input }}
-              id="outlined-name-primary"
-              fullWidth={true}
-              title="Insert the food name"
-              variant="outlined"
-              required
-              color="primary"
-              placeholder={"Food name"}
-              label="Food name"
-              type="text"
-              margin="normal"
-            ></TextFieldWrapper>
-            <TextFieldWrapper
-              className={classes.root}
-              InputProps={{ className: classes.input }}
-              fullWidth={true}
-              id="outlined-descrip-secondary"
-              title="Insert the food description"
-              variant="outlined"
-              required
-              color="secondary"
-              placeholder={"Food description"}
-              label="Food description"
-              multiline={true}
-              type="text"
-              margin="normal"
-            ></TextFieldWrapper>
-            <TextFieldWrapper
-              id="standard-select-price-range"
-              select
-              variant="outlined"
-              label="Select"
-              value={priceRange}
-              onChange={handleChange}
-              helperText="Select food price range"
-            >
-              {priceRanges.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextFieldWrapper>
-            {/* </Box> */}
-          </CardActionsWrapper>
-          <CardActionsWrapper
-            bgcolor={"cardBackgroundColor"}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            <Button
-              size="large"
-              p={1}
-              title="Send in form and create food"
-              onClick={createNewFood}
-            >
-              <Box color={"lightgreen"}>Send</Box>
-            </Button>
-          </CardActionsWrapper>
-        </CardWrapperFullWidth>
-      </SecondContentWrapper>
-    </Wrapper>
+            {priceRanges.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextFieldWrapper>
+          {editMode ? (
+            <ButtonArea color="white">
+              <ButtonWrapper mr={5}>
+                <StyledButtonPrimary
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  color="inherit"
+                  p={1}
+                  title="Edit food"
+                >
+                  UPDATE
+                </StyledButtonPrimary>
+              </ButtonWrapper>
+              <LinkWrapper to={"/food/" + food._id} key={food._id}>
+                <StyledButtonSecondary
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  p={1}
+                  title="Cancel edit"
+                  onClick={createNewFood}
+                >
+                  <StyledBox color={"primary"}>CANCEL</StyledBox>
+                </StyledButtonSecondary>
+              </LinkWrapper>
+            </ButtonArea>
+          ) : (
+            <ButtonArea color="white">
+              <ButtonWrapper mr={5}>
+                <StyledButtonPrimary
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  color="inherit"
+                  p={1}
+                  title="Send in form and create food"
+                >
+                  CREATE
+                </StyledButtonPrimary>
+              </ButtonWrapper>
+              <LinkWrapper to={"/"}>
+                <StyledButtonSecondary
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  p={1}
+                  title="Send in form and create food"
+                  onClick={createNewFood}
+                >
+                  <StyledBox color={"primary"}>CANCEL</StyledBox>
+                </StyledButtonSecondary>
+              </LinkWrapper>
+            </ButtonArea>
+          )}
+        </FormWrapper>
+      </CardWrapperFullWidth>
+    </SecondContentWrapper>
   );
 };
 
-const Wrapper = styled.div`
-  ${spacing};
-  ${palette};
-  ${typography};
-`;
 const SecondContentWrapper = styled.div`
   ${spacing};
   ${palette};
@@ -154,14 +234,24 @@ const SecondContentWrapper = styled.div`
   display: flex;
 `;
 const TextFieldWrapper = styled(TextField)`
+  color: primary;
+  .MuiFormLabel-root.Mui-focused {
+    color: ${themes.light.palette.inputColor};
+  }
+  .MuiFilledInput-underline:after {
+    border-color: ${themes.light.palette.inputColor};
+  }
   fieldset {
     border-color: white;
+    /* background-color: lightgray; */
   }
-  input {
-    ::-webkit-input-placeholder {
-      /* WebKit, Blink, Edge */
-    }
-  }
+  ${spacing};
+  ${palette};
+  ${typography};
+  ${sizing};
+`;
+
+const FormWrapper = styled.form`
   ${spacing};
   ${palette};
   ${typography};

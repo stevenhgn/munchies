@@ -20,6 +20,7 @@ const config = {
         test: /\.svg$/,
         use: "file-loader",
       },
+      { test: /\.css$/i, use: ["style-loader", "css-loader"] },
       {
         test: /\.png$/,
         use: [
