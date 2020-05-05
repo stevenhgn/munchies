@@ -4,13 +4,16 @@ import { spacing, palette, typography, display } from "@material-ui/system";
 import styled from "styled-components";
 import ThemeContext from "../../theme-context";
 import { getFoods } from "../../api/foods";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   LinkWrapper,
-  StyledButtonSecondary,
+  StyledButtonInteraction,
   ButtonWrapper,
+  StyledButtonPrimary,
+  StyledBox,
+  StyledAddCircle,
 } from "../../shared/StyledSystemComponent";
 import Grid from "@material-ui/core/Grid";
+import themes from "../../shared/themes";
 var Home = (props) => {
   const [foods, setFoods] = useState([]);
   useEffect(() => {
@@ -26,14 +29,15 @@ var Home = (props) => {
 
   return (
     <Wrapper>
-      <LinkWrapper to="/createFood">
-        <ButtonWrapper color="white" mb={5}>
-          <StyledButtonSecondary variant="outlined" color="inherit">
-            Create Food
-          </StyledButtonSecondary>
-        </ButtonWrapper>
-      </LinkWrapper>
-      <Grid container spacing={3}>
+      <StyledBox mb={4}>
+        <LinkWrapper to="/createFood">
+          <StyledButtonInteraction variant="text">
+            <StyledAddCircle color={"primary"} mr={1}></StyledAddCircle>
+            <StyledBox color={"interaction"}>Create Food</StyledBox>
+          </StyledButtonInteraction>
+        </LinkWrapper>
+      </StyledBox>
+      <Grid container spacing={2}>
         {foods.map((food) => (
           <Grid item key={food._id}>
             <LinkWrapper to={"/food/" + food._id} key={food._id}>
@@ -58,17 +62,4 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const CardList = styled.div`
-  ${spacing};
-  ${palette};
-  flex-wrap: wrap;
-  flex-direction: row;
-  display: flex;
-`;
-
-const Header = styled.div`
-  flex-wrap: wrap;
-  flex-direction: row;
-  display: flex;
-`;
 export default Home;

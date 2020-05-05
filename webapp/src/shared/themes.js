@@ -24,6 +24,7 @@ const themes = {
       secondary: "white",
       third: "white",
       priceRange: "darkgray",
+      interaction: "black",
       // backgroundColor_two: "#081B33",
       money: "#27AE60",
 
