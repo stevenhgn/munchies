@@ -37,12 +37,7 @@ const StyledButtonPrimary = styled(Button)`
   ${palette};
   ${typography};
   ${sizing};
-  /* &.MuiButton-containedSecondary {
-    margin-left: 10px;
-  }
-  &.MuiButton-containedSizeLarge {
-    margin-left: 10px;
-  } */
+
   &.MuiButton-contained {
     background-color: ${themes.light.palette.inputColor};
     &:hover {

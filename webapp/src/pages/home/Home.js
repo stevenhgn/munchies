@@ -5,7 +5,11 @@ import styled from "styled-components";
 import ThemeContext from "../../theme-context";
 import { getFoods } from "../../api/foods";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { LinkWrapper } from "../../shared/StyledSystemComponent";
+import {
+  LinkWrapper,
+  StyledButtonSecondary,
+  ButtonWrapper,
+} from "../../shared/StyledSystemComponent";
 import Grid from "@material-ui/core/Grid";
 var Home = (props) => {
   const [foods, setFoods] = useState([]);
@@ -22,6 +26,13 @@ var Home = (props) => {
 
   return (
     <Wrapper>
+      <LinkWrapper to="/createFood">
+        <ButtonWrapper color="white" mb={5}>
+          <StyledButtonSecondary variant="outlined" color="inherit">
+            Create Food
+          </StyledButtonSecondary>
+        </ButtonWrapper>
+      </LinkWrapper>
       <Grid container spacing={3}>
         {foods.map((food) => (
           <Grid item key={food._id}>

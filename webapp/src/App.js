@@ -43,14 +43,6 @@ class App extends React.Component {
                   <LinkWrapper to="/">
                     <Logo color={"logo"}>MUNCHIES</Logo>
                   </LinkWrapper>
-                  <LinkWrapper to="/createFood">
-                    <StyledButton
-                      color={"primary"}
-                      style={{ marginTop: "20px" }}
-                    >
-                      Create Food
-                    </StyledButton>
-                  </LinkWrapper>
                   <ThemeContext.Consumer>
                     {({ theme, toggleTheme }) => (
                       <StyledButton

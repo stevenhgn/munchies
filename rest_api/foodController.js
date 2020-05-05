@@ -30,7 +30,7 @@ exports.new = function(req, res) {
     //     res.json(err);
     res.json({
       message: "New food created!",
-      data: food
+      item: food
     });
   });
 };

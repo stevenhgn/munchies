@@ -11,6 +11,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 import {
   StyledBox,
@@ -20,18 +21,11 @@ import {
   ButtonWrapper,
   ButtonArea,
 } from "../../shared/StyledSystemComponent";
-import {
-  CardActionsWrapper,
-  CardWrapper,
-  CardActionAreaWrapper,
-  CardContentWrapper,
-  IWrapper,
-  CardMediaWrapper,
-  CardWrapperFullWidth,
-} from "../../shared/CardWrapper";
+import { CardActionsWrapper, CardWrapper } from "../../shared/CardWrapper";
 import { getFoodwithId, deleteFoodWithId } from "../../api/foods";
 
 const FoodOverview = ({ match }) => {
+  let history = useHistory();
   const foodId = match.params.foodId;
   const [food, setFood] = useState("");
   const [open, setOpen] = useState(false);
@@ -41,8 +35,8 @@ const FoodOverview = ({ match }) => {
   };
   const onAgreeDelete = async () => {
     setOpen(!open);
-    await deleteFoodWithId(foodId);
-    console.log("Deleted");
+    const msg = await deleteFoodWithId(foodId);
+    if (msg === "Food deleted") history.push("/");
   };
 
   useEffect(() => {
