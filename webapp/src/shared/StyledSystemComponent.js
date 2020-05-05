@@ -4,9 +4,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Typography, Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import themes from "../shared/themes";
-import AddCircle from "@material-ui/icons/AddCircle";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { PlusCircle } from "@styled-icons/boxicons-solid/";
+
 const StyledBox = styled(Box)`
   ${spacing}
   ${palette}
@@ -30,12 +29,10 @@ const LinkWrapper = styled(Link)`
   text-decoration: none;
   color: #000;
 `;
-const StyledAddCircle = styled(AddCircle)`
+const StyledAddCircle = styled(PlusCircle)`
   ${spacing};
   ${palette};
-  &.MuiSvgIcon-colorPrimary {
-    color: ${themes.light.palette.interaction};
-  }
+  ${sizing};
 `;
 const StyledTypography = styled(Typography)`
   ${spacing}

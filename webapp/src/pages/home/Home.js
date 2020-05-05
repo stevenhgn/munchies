@@ -32,8 +32,10 @@ var Home = (props) => {
       <StyledBox mb={4}>
         <LinkWrapper to="/createFood">
           <StyledButtonInteraction variant="text">
-            <StyledAddCircle color={"primary"} mr={1}></StyledAddCircle>
-            <StyledBox color={"interaction"}>Create Food</StyledBox>
+            <StyledAddCircle mr={1} size={25} color={"interaction"} />
+            <StyledBox color={"interaction"} fontSize={18}>
+              Create Food
+            </StyledBox>
           </StyledButtonInteraction>
         </LinkWrapper>
       </StyledBox>
