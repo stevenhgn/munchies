@@ -69,8 +69,13 @@ const CreateFood = ({ match }) => {
       price_range: priceRange,
       image: data.image,
     };
-    const food = await createNewFood(reqBody); // call axios api call to create new food with reqBody as data
-    if (food != null) history.push("/food/" + food._id);
+    let food = null;
+    if (foodId != null) {
+      food = await updateFood(reqBody, foodId); // call axios api call to create new food with reqBody as data
+    } else {
+      food = await createNewFood(reqBody); // call axios api call to create new food with reqBody as data
+    }
+    if (food != null) history.push("/food/" + food._id); // Navigate to the created/edited food
   };
 
   const handleChange = (event) => {
@@ -164,20 +169,22 @@ const CreateFood = ({ match }) => {
               </MenuItem>
             ))}
           </TextFieldWrapper>
-          {editMode ? (
-            <ButtonArea color="white">
-              <ButtonWrapper mr={5}>
-                <StyledButtonPrimary
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  color="inherit"
-                  p={1}
-                  title="Edit food"
-                >
-                  UPDATE
-                </StyledButtonPrimary>
-              </ButtonWrapper>
+
+          <ButtonArea color="white">
+            <ButtonWrapper mr={5}>
+              <StyledButtonPrimary
+                type="submit"
+                variant="contained"
+                size="large"
+                color="inherit"
+                p={1}
+                title="Edit food"
+              >
+                {editMode ? "UPDATE" : "CREATE"}
+              </StyledButtonPrimary>
+            </ButtonWrapper>
+
+            {editMode ? (
               <LinkWrapper to={"/food/" + food._id} key={food._id}>
                 <StyledButtonSecondary
                   type="submit"
@@ -189,21 +196,7 @@ const CreateFood = ({ match }) => {
                   <StyledBox color={"primary"}>CANCEL</StyledBox>
                 </StyledButtonSecondary>
               </LinkWrapper>
-            </ButtonArea>
-          ) : (
-            <ButtonArea color="white">
-              <ButtonWrapper mr={5}>
-                <StyledButtonPrimary
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  color="inherit"
-                  p={1}
-                  title="Send in form and create food"
-                >
-                  CREATE
-                </StyledButtonPrimary>
-              </ButtonWrapper>
+            ) : (
               <LinkWrapper to={"/"}>
                 <StyledButtonSecondary
                   type="submit"
@@ -215,8 +208,8 @@ const CreateFood = ({ match }) => {
                   <StyledBox color={"primary"}>CANCEL</StyledBox>
                 </StyledButtonSecondary>
               </LinkWrapper>
-            </ButtonArea>
-          )}
+            )}
+          </ButtonArea>
         </FormWrapper>
       </CardWrapperFullWidth>
     </SecondContentWrapper>

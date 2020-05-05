@@ -57,7 +57,7 @@ exports.update = function(req, res) {
       if (err) res.json(err);
       res.json({
         message: "Food Info updated",
-        data: food
+        item: food
       });
     });
   });

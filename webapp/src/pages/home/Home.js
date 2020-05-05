@@ -39,7 +39,7 @@ var Home = (props) => {
           </StyledButtonInteraction>
         </LinkWrapper>
       </StyledBox>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         {foods.map((food) => (
           <Grid item key={food._id}>
             <LinkWrapper to={"/food/" + food._id} key={food._id}>
