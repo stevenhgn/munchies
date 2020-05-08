@@ -47,6 +47,7 @@ const CreateFood = ({ match }) => {
     defaultValues: {
       name: "",
       image: "",
+      description: "",
       price: 0,
       price_range: priceRange,
     },
@@ -58,6 +59,7 @@ const CreateFood = ({ match }) => {
       setValue("name", food.name);
       setValue("image", food.image);
       setValue("price", food.price);
+      setValue("description", food.description);
       setPriceRange(food.price_range); // set the selection of price_range if food is found
     }
     if (match.params.foodId != null || match.params.foodId != undefined) {
@@ -71,6 +73,7 @@ const CreateFood = ({ match }) => {
       price: data.price,
       price_range: priceRange,
       image: data.image,
+      description: data.description,
     };
     let food = null;
     if (foodId != null) {
@@ -96,7 +99,7 @@ const CreateFood = ({ match }) => {
       <StyledTypography variant={"h3"}>
         {editMode ? "Edit " + food.name : "Create new food"}
       </StyledTypography>
-      <DivWrapperHalfWidth mt={8} bgcolor={"white"}>
+      <DivWrapperHalfWidth mt={8} bgcolor={"cardBackgroundColor"}>
         <FormWrapper onSubmit={handleSubmit(onSubmit)} p={20} pl={30} pr={30}>
           <TextFieldWrapper
             name="name"
@@ -111,19 +114,21 @@ const CreateFood = ({ match }) => {
             margin="normal"
             focused={true}
           ></TextFieldWrapper>
-          {/* <TextFieldWrapper
+          <TextFieldWrapper
+            name="description"
             inputRef={register}
-            name="FoodDescription"
-            id="outlined-descrip-secondary"
+            id="filled-description-primary"
             title="Insert the food description"
-            variant="outlined"
+            rows="3"
+            variant="filled"
             required
             placeholder={"Food description"}
             label="Food description"
-            multiline={true}
-            type="text"
+            type="input"
             margin="normal"
-          ></TextFieldWrapper> */}
+            multiline={true}
+            focused={true}
+          ></TextFieldWrapper>
           <TextFieldWrapper
             name="image"
             inputRef={register}

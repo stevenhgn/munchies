@@ -77,6 +77,7 @@ const FoodOverview = ({ match }) => {
               <StyledH1>{food.name}</StyledH1>
               <StyledH3 color={"money"}>{priceRange}</StyledH3>
               <StyledH4 color={"primary"}>{food.price} NOK</StyledH4>
+              <StyledH4 color={"primary"}>{food.description}</StyledH4>
             </StyledBox>
           </CardDescription>
           <ButtonArea mb={5}>

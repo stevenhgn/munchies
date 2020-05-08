@@ -7,6 +7,7 @@ var foodSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  description: String,
   price : Number,
   price_range: Number, // 1, 2 or 3
   image: String,

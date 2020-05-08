@@ -12,16 +12,18 @@ import {
   StyledBox,
   StyledAddCircle,
   StyledChip,
+  StyledTooltip,
 } from "../../shared/StyledSystemComponent";
+
 import Grid from "@material-ui/core/Grid";
 import themes from "../../shared/themes";
 var Home = (props) => {
   const [foods, setFoods] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
   const [chipData, setChipData] = useState([
-    { key: 1, label: "$ (0-75 NOK)", clicked: false },
-    { key: 2, label: "$$ (75-150 NOK)", clicked: false },
-    { key: 3, label: "$$$ (150-300 NOK)", clicked: false },
+    { key: 1, label: "$", tooltip: "0-75 NOK", clicked: false },
+    { key: 2, label: "$$ ", tooltip: " 75-150 NOK", clicked: false },
+    { key: 3, label: "$$$", tooltip: "150-300 NOK", clicked: false },
   ]);
   useEffect(() => {
     async function fetchFood() {
@@ -58,14 +60,21 @@ var Home = (props) => {
       <StyledBoxRowFlex mt={5}>
         {chipData.map((chip) => (
           <AWrapper key={chip.key * -2} mr={3}>
-            <StyledChip
-              variant="default"
-              size="medium"
-              label={chip.label}
-              key={chip.key}
-              color={chip.clicked ? "primary" : "default"}
-              onClick={handleClick(chip)}
-            />
+            <StyledTooltip
+              title={<h3>{chip.tooltip}</h3>}
+              arrow
+              fontSize={"3em"}
+            >
+              <StyledChip
+                width={"100px"}
+                variant="default"
+                size="medium"
+                label={chip.label}
+                key={chip.key}
+                color={chip.clicked ? "primary" : "default"}
+                onClick={handleClick(chip)}
+              />
+            </StyledTooltip>
           </AWrapper>
         ))}
       </StyledBoxRowFlex>
