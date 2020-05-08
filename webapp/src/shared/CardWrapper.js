@@ -28,6 +28,8 @@ const CardWrapperFlexColumn = styled(Card)`
 const CardWrapperFullWidth = styled(Card)`
   ${spacing};
   ${palette};
+  width: 100%;
+  height: 100%;
 `;
 const DivWrapperHalfWidth = styled.div`
   ${spacing};
