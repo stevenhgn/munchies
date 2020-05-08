@@ -5,8 +5,20 @@ import { Typography, Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import themes from "../shared/themes";
 import { PlusCircle } from "@styled-icons/boxicons-solid/";
+import { Chip } from "@material-ui/core";
 
 const StyledBox = styled(Box)`
+  ${spacing}
+  ${palette}
+`;
+const Logo = styled(Box)`
+  ${spacing}
+  ${palette}
+  ${sizing};
+  font-family: "Sansita", sans-serif;
+
+`;
+const StyledBoxRowFlex = styled(Box)`
   ${spacing}
   ${palette}
 `;
@@ -24,7 +36,13 @@ const ButtonArea = styled.div`
   display: flex;
   justify-content: center;
 `;
-
+const StyledH3 = styled.h3`
+  ${spacing};
+  ${palette};
+  ${typography};
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+`;
 const LinkWrapper = styled(Link)`
   text-decoration: none;
   color: #000;
@@ -37,6 +55,11 @@ const StyledAddCircle = styled(PlusCircle)`
 const StyledTypography = styled(Typography)`
   ${spacing}
   ${palette}
+  color: ${themes.light.palette.h3};
+  display:flex;
+  justify-content: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
 `;
 const StyledButtonPrimary = styled(Button)`
   ${spacing};
@@ -88,8 +111,30 @@ const StyledButtonInteraction = styled(Button)`
     }
   }
 `;
+const StyledChip = styled(Chip)`
+  ${spacing};
+  ${palette};
+  ${sizing};
+  &.MuiChip-clickableColorPrimary:hover {
+    background-color: ${themes.light.palette.money};
+  }
+  &.MuiChip-clickableColorPrimary:focus {
+    background-color: ${themes.light.palette.money};
+  }
+  &.MuiChip-clickableColorPrimary {
+    background-color: ${themes.light.palette.money};
+  }
+`;
+const StyledH1 = styled.h1`
+  ${spacing};
+  ${palette};
+  ${typography};
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+`;
 export {
   StyledBox,
+  StyledBoxRowFlex,
   LinkWrapper,
   StyledTypography,
   StyledButtonPrimary,
@@ -99,4 +144,8 @@ export {
   ButtonArea,
   StyledButtonInteraction,
   StyledAddCircle,
+  StyledChip,
+  Logo,
+  StyledH3,
+  StyledH1,
 };

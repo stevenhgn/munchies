@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { spacing, palette, typography, sizing } from "@material-ui/system";
 import Button from "@material-ui/core/Button";
-import {
-  StyledBox,
-  StyledTypography,
-} from "../../shared/StyledSystemComponent";
 import { useHistory } from "react-router-dom";
 import themes from "../../shared/themes";
-import { CardWrapperFullWidth } from "../../shared/CardWrapper";
+import {
+  CardWrapperFullWidth,
+  DivWrapperHalfWidth,
+} from "../../shared/CardWrapper";
 import { createNewFood, getFoodwithId, updateFood } from "../../api/foods";
 import { TextField, MenuItem } from "@material-ui/core";
 import { useForm } from "react-hook-form";
@@ -17,7 +16,11 @@ import {
   ButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
+  StyledTypography,
   ButtonArea,
+  StyledH3,
+  StyledBox,
+  StyledH1,
 } from "../../shared/StyledSystemComponent";
 
 const CreateFood = ({ match }) => {
@@ -85,16 +88,20 @@ const CreateFood = ({ match }) => {
   const editMode = !!foodId;
   return (
     <SecondContentWrapper>
-      <CardWrapperFullWidth m={16}>
-        <StyledTypography variant="h5" p={5}>
-          {editMode ? "Edit food" : "Create your own food"}
-        </StyledTypography>
-        <FormWrapper onSubmit={handleSubmit(onSubmit)} pl={5} pr={5} pb={5}>
+      <ButtonWrapper>
+        <LinkWrapper to={"/"}>
+          <StyledH3 color={"interaction"}>{"< All Munchies"}</StyledH3>
+        </LinkWrapper>
+      </ButtonWrapper>
+      <StyledTypography variant={"h3"}>
+        {editMode ? "Edit " + food.name : "Create new food"}
+      </StyledTypography>
+      <DivWrapperHalfWidth mt={8} bgcolor={"white"}>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)} p={20} pl={30} pr={30}>
           <TextFieldWrapper
             name="name"
             inputRef={register}
             id="filled-name-primary"
-            fullWidth={true}
             title="Insert the food name"
             variant="filled"
             required
@@ -107,7 +114,6 @@ const CreateFood = ({ match }) => {
           {/* <TextFieldWrapper
             inputRef={register}
             name="FoodDescription"
-            fullWidth={true}
             id="outlined-descrip-secondary"
             title="Insert the food description"
             variant="outlined"
@@ -122,7 +128,6 @@ const CreateFood = ({ match }) => {
             name="image"
             inputRef={register}
             focused={true}
-            fullWidth
             id="filled-image-secondary"
             rows="2"
             title="Insert the food image"
@@ -138,7 +143,6 @@ const CreateFood = ({ match }) => {
             name="price"
             type="number"
             inputRef={register}
-            fullWidth={true}
             id="filled-image-secondary"
             title="Insert the food image"
             variant="filled"
@@ -170,7 +174,7 @@ const CreateFood = ({ match }) => {
             ))}
           </TextFieldWrapper>
 
-          <ButtonArea color="white">
+          <ButtonArea color="white" mt={5}>
             <ButtonWrapper mr={5}>
               <StyledButtonPrimary
                 type="submit"
@@ -211,7 +215,7 @@ const CreateFood = ({ match }) => {
             )}
           </ButtonArea>
         </FormWrapper>
-      </CardWrapperFullWidth>
+      </DivWrapperHalfWidth>
     </SecondContentWrapper>
   );
 };
@@ -221,6 +225,8 @@ const SecondContentWrapper = styled.div`
   ${palette};
   ${typography};
   display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 const TextFieldWrapper = styled(TextField)`
   color: primary;
@@ -244,5 +250,7 @@ const FormWrapper = styled.form`
   ${spacing};
   ${palette};
   ${typography};
+  display: flex;
+  flex-direction: column;
 `;
 export default CreateFood;
