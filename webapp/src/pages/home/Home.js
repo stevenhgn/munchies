@@ -17,6 +17,7 @@ import Grid from "@material-ui/core/Grid";
 import themes from "../../shared/themes";
 var Home = (props) => {
   const [foods, setFoods] = useState([]);
+  const [filteredFoods, setFilteredFoods] = useState([]);
   const [chipData, setChipData] = useState([
     { key: 1, label: "$ (0-75 NOK)", clicked: false },
     { key: 2, label: "$$ (75-150 NOK)", clicked: false },
@@ -24,19 +25,33 @@ var Home = (props) => {
   ]);
   useEffect(() => {
     async function fetchFood() {
-      const foods = await getFoods();
+      const foods = await getFoods(null);
       setFoods(foods);
+      setFilteredFoods(foods);
     }
     fetchFood();
   }, []);
-  if (foods.length === 0) {
-    return <h1>Fetching foods...</h1>; // Displaying loading process as long as there are no food available.
-  }
 
-  const handleClick = (chipClicked) => () => {
+  // if (foods.length === 0) {
+  //   return <h1>Fetching foods...</h1>; // Displaying loading process as long as there are no food available.
+  // }
+
+  const handleClick = (chipClicked) => async () => {
     chipClicked.clicked = !chipClicked.clicked;
     setChipData((chips) => chips.filter((chip) => chip.key != null)); // TODOS: Is this the best solution?
-    // TODOS: Handle filtering here
+    let filteredFoods = [];
+    chipData.forEach((chip) => {
+      if (chip.clicked) {
+        filteredFoods.push(
+          ...foods.filter((food) => food.price_range == chip.key) // ... flatten list
+        );
+      }
+      setFilteredFoods(filteredFoods);
+    });
+
+    if (filteredFoods.length === 0) {
+      setFilteredFoods(foods);
+    }
   };
   return (
     <Wrapper>
@@ -65,19 +80,21 @@ var Home = (props) => {
         </LinkWrapper>
       </StyledBox>
       <Grid container spacing={3}>
-        {foods.map((food) => (
-          <Grid item key={food._id}>
-            <LinkWrapper to={"/food/" + food._id} key={food._id}>
-              <CardElement
-                key={food._id}
-                name={food.name}
-                image={food.image}
-                price={food.price}
-                price_range={food.price_range}
-              />
-            </LinkWrapper>
-          </Grid>
-        ))}
+        {foods.length === 0
+          ? "Theres no food"
+          : filteredFoods.map((food) => (
+              <Grid item key={food._id}>
+                <LinkWrapper to={"/food/" + food._id} key={food._id}>
+                  <CardElement
+                    key={food._id}
+                    name={food.name}
+                    image={food.image}
+                    price={food.price}
+                    price_range={food.price_range}
+                  />
+                </LinkWrapper>
+              </Grid>
+            ))}
       </Grid>
     </Wrapper>
   );

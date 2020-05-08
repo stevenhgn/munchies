@@ -20,11 +20,14 @@ import {
   StyledButtonDelete,
   ButtonWrapper,
   ButtonArea,
+  StyledH3,
+  StyledH1,
 } from "../../shared/StyledSystemComponent";
 import {
   CardActionsWrapper,
   CardWrapper,
   CardWrapperFlexColumn,
+  CardWrapperFlex,
 } from "../../shared/CardWrapper";
 import { getFoodwithId, deleteFoodWithId } from "../../api/foods";
 
@@ -61,43 +64,46 @@ const FoodOverview = ({ match }) => {
   }
   return (
     <SecondContentWrapper>
-      <CardWrapper bgcolor={"cardBackgroundColor"} m={4}>
+      <ButtonWrapper>
+        <LinkWrapper to={"/"}>
+          <StyledH3 color={"interaction"}>{"< All Munchies"}</StyledH3>
+        </LinkWrapper>
+      </ButtonWrapper>
+      <CardWrapperFlex bgcolor={"cardBackgroundColor"} m={4}>
         <ImgWrapper src={food.image}></ImgWrapper>
-        <StyledBox color={"primary"} m={2}>
-          {food.name}
-        </StyledBox>
-        <StyledBox color={"primary"} m={2}>
-          {food.price} kr
-        </StyledBox>
-        <StyledBox color={"money"} m={2}>
-          {priceRange}
-        </StyledBox>
+        <CardContentWrapper bgcolor={"cardBackgroundColor"}>
+          <CardDescription ml={4}>
+            <StyledBox color={"primary"}>
+              <StyledH1>{food.name}</StyledH1>
+              <StyledH3 color={"money"}>{priceRange}</StyledH3>
+              <StyledH4 color={"primary"}>{food.price} NOK</StyledH4>
+            </StyledBox>
+          </CardDescription>
+          <ButtonArea mb={5}>
+            <LinkWrapper to={"/createFood/" + foodId} key={foodId}>
+              <ButtonWrapper color="white" mr={5}>
+                <StyledButtonPrimary
+                  variant="contained"
+                  color="inherit"
+                  width={100}
+                  onClick={editFood}
+                >
+                  Edit
+                </StyledButtonPrimary>
+              </ButtonWrapper>
+            </LinkWrapper>
 
-        <ButtonArea mb={5}>
-          <LinkWrapper to={"/createFood/" + foodId} key={foodId}>
-            <ButtonWrapper color="white" mr={5}>
-              <StyledButtonPrimary
-                variant="contained"
-                color="inherit"
-                width={100}
-                onClick={editFood}
-              >
-                Edit
-              </StyledButtonPrimary>
-            </ButtonWrapper>
-          </LinkWrapper>
-
-          <StyledButtonDelete
-            variant="contained"
-            color="secondary"
-            width={100}
-            onClick={toggleDialog}
-          >
-            Delete
-          </StyledButtonDelete>
-        </ButtonArea>
-      </CardWrapper>
-
+            <StyledButtonDelete
+              variant="contained"
+              color="secondary"
+              width={100}
+              onClick={toggleDialog}
+            >
+              Delete
+            </StyledButtonDelete>
+          </ButtonArea>
+        </CardContentWrapper>
+      </CardWrapperFlex>
       <Dialog
         open={open}
         onClose={toggleDialog}
@@ -120,6 +126,30 @@ const FoodOverview = ({ match }) => {
     </SecondContentWrapper>
   );
 };
+const CardContentWrapper = styled.div`
+  ${spacing};
+  ${palette};
+  ${typography};
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+const CardDescription = styled.div`
+  ${spacing};
+  ${palette};
+  ${typography};
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledH4 = styled.h4`
+  ${spacing};
+  ${palette};
+  ${typography};
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+`;
 
 const SecondContentWrapper = styled.div`
   ${spacing};
@@ -130,7 +160,7 @@ const SecondContentWrapper = styled.div`
 `;
 const ImgWrapper = styled.img`
   max-height: 500px;
-  width: 100%;
+  width: 50%;
   height: 100%;
   object-fit: cover;
 `;

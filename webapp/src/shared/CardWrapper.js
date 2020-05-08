@@ -14,6 +14,11 @@ const CardWrapper = styled(Card)`
   ${spacing};
   ${palette};
 `;
+const CardWrapperFlex = styled(Card)`
+  ${spacing};
+  ${palette};
+  display: flex;
+`;
 const CardWrapperFlexColumn = styled(Card)`
   ${spacing};
   ${palette};
@@ -23,8 +28,14 @@ const CardWrapperFlexColumn = styled(Card)`
 const CardWrapperFullWidth = styled(Card)`
   ${spacing};
   ${palette};
-  width: 100%;
-  height: 100%;
+`;
+const DivWrapperHalfWidth = styled.div`
+  ${spacing};
+  ${palette};
+  max-width: 50%;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
 `;
 const CardActionsWrapper = styled(CardActions)`
   ${spacing};
@@ -60,4 +71,6 @@ export {
   CardMediaWrapper,
   CardWrapperFullWidth,
   CardWrapperFlexColumn,
+  CardWrapperFlex,
+  DivWrapperHalfWidth,
 };

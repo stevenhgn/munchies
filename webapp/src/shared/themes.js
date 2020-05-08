@@ -15,6 +15,7 @@ const themes = {
       backgroundColor: "#C62828",
       // cardBackgroundColor: "white",
       cardBackgroundColor: "#F5f5f5",
+      h3: "white",
     },
   },
   dark: {

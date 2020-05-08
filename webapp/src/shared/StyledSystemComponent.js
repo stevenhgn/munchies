@@ -36,7 +36,13 @@ const ButtonArea = styled.div`
   display: flex;
   justify-content: center;
 `;
-
+const StyledH3 = styled.h3`
+  ${spacing};
+  ${palette};
+  ${typography};
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+`;
 const LinkWrapper = styled(Link)`
   text-decoration: none;
   color: #000;
@@ -49,6 +55,11 @@ const StyledAddCircle = styled(PlusCircle)`
 const StyledTypography = styled(Typography)`
   ${spacing}
   ${palette}
+  color: ${themes.light.palette.h3};
+  display:flex;
+  justify-content: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
 `;
 const StyledButtonPrimary = styled(Button)`
   ${spacing};
@@ -104,8 +115,23 @@ const StyledChip = styled(Chip)`
   ${spacing};
   ${palette};
   ${sizing};
+  &.MuiChip-clickableColorPrimary:hover {
+    background-color: ${themes.light.palette.money};
+  }
+  &.MuiChip-clickableColorPrimary:focus {
+    background-color: ${themes.light.palette.money};
+  }
+  &.MuiChip-clickableColorPrimary {
+    background-color: ${themes.light.palette.money};
+  }
 `;
-
+const StyledH1 = styled.h1`
+  ${spacing};
+  ${palette};
+  ${typography};
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+`;
 export {
   StyledBox,
   StyledBoxRowFlex,
@@ -120,4 +146,6 @@ export {
   StyledAddCircle,
   StyledChip,
   Logo,
+  StyledH3,
+  StyledH1,
 };
