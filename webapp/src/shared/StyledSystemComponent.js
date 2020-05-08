@@ -5,7 +5,7 @@ import { Typography, Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import themes from "../shared/themes";
 import { PlusCircle } from "@styled-icons/boxicons-solid/";
-import { Chip } from "@material-ui/core";
+import { Chip, Tooltip } from "@material-ui/core";
 
 const StyledBox = styled(Box)`
   ${spacing}
@@ -16,7 +16,12 @@ const Logo = styled(Box)`
   ${palette}
   ${sizing};
   font-family: "Sansita", sans-serif;
-
+`;
+const StyledTooltip = styled(Tooltip)`
+  ${spacing}
+  ${palette}
+  ${sizing};
+  font-size:10em;
 `;
 const StyledBoxRowFlex = styled(Box)`
   ${spacing}
@@ -148,4 +153,5 @@ export {
   Logo,
   StyledH3,
   StyledH1,
+  StyledTooltip,
 };

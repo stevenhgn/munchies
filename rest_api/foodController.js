@@ -24,6 +24,7 @@ exports.new = function(req, res) {
   food.price = req.body.price;
   food.price_range = req.body.price_range;
   food.image = req.body.image;
+  food.description = req.body.description;
   // save the food and check for errors
   food.save(function(err) {
     // if (err)
@@ -52,6 +53,7 @@ exports.update = function(req, res) {
     food.price = req.body.price;
     food.price_range = req.body.price_range;
     food.image = req.body.image;
+    food.description = req.body.description;
     // save the food and check for errors
     food.save(function(err) {
       if (err) res.json(err);
