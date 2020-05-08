@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import FoodOverview from "./components/Food/FoodOverview";
 import CreateFood from "./components/Food/CreateFood";
-import { LinkWrapper } from "./shared/StyledSystemComponent";
+import { LinkWrapper, StyledBox } from "./shared/StyledSystemComponent";
 import { spacing, palette, typography } from "@material-ui/system";
 import css from "./App.css";
 class App extends React.Component {
@@ -43,22 +43,20 @@ class App extends React.Component {
                   <LinkWrapper to="/">
                     <Logo color={"logo"}>MUNCHIES</Logo>
                   </LinkWrapper>
-                  <LinkWrapper to="/createFood">
-                    <StyledButton
-                      color={"primary"}
-                      style={{ marginTop: "20px" }}
-                    >
-                      Create Food
-                    </StyledButton>
-                  </LinkWrapper>
                   <ThemeContext.Consumer>
                     {({ theme, toggleTheme }) => (
-                      <StyledButton
-                        style={{ position: "absolute", right: 0 }}
+                      <StyledBox
+                        mb={4}
+                        mr={4}
                         onClick={toggleTheme}
+                        style={{ position: "absolute", right: 0 }}
                       >
-                        {this.state.themeString}
-                      </StyledButton>
+                        <StyledThemeModeButton variant="contained">
+                          <StyledBox color={"white"}>
+                            {this.state.themeString}
+                          </StyledBox>
+                        </StyledThemeModeButton>
+                      </StyledBox>
                     )}
                   </ThemeContext.Consumer>
                 </Header>
@@ -82,11 +80,23 @@ const Logo = styled.h1`
   ${palette};
   font-family: "Sansita", sans-serif;
 `;
+// TODOS: Design dark/light mode button
+const StyledThemeModeButton = styled(Button)`
+  ${spacing};
+  ${palette};
+  display: flex;
+  justify-content: flex-end;
+  &.MuiButton-contained {
+    background-color: ${themes.light.palette.primary};
+    &:hover {
+      background-color: ${themes.light.palette.primary};
+    }
+  }
+`;
 const Header = styled.div`
   ${spacing};
   ${palette};
   columns: 2;
-  flex-wrap: wrap;
   flex-direction: row;
   display: flex;
 `;
@@ -98,16 +108,5 @@ const AppContent = styled.div`
   ${spacing};
   max-width: 1280px;
   margin: auto;
-`;
-// TODOS: Design dark/light mode button
-const StyledButton = styled(Button)`
-  ${spacing};
-  ${palette};
-  /* background-color: #6772e5; */
-  /* box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); */
-  /* padding: 4px 7px; */
-  /* &:hover {
-    background-color: #5469d4;
-  } */
 `;
 export default hot(App);

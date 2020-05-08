@@ -14,6 +14,12 @@ const CardWrapper = styled(Card)`
   ${spacing};
   ${palette};
 `;
+const CardWrapperFlexColumn = styled(Card)`
+  ${spacing};
+  ${palette};
+  display: flex;
+  flex-direction: row;
+`;
 const CardWrapperFullWidth = styled(Card)`
   ${spacing};
   ${palette};
@@ -53,4 +59,5 @@ export {
   CardContentWrapper,
   CardMediaWrapper,
   CardWrapperFullWidth,
+  CardWrapperFlexColumn,
 };

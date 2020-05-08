@@ -21,21 +21,20 @@ const createNewFood = async (reqBody) => {
   let food = res.data.item;
   return food;
 };
-const updateFood = async (reqBody) => {
+const updateFood = async (reqBody, foodId) => {
   const res = await axiosInstance.put(
     "/foods/" + foodId,
     qs.stringify(reqBody),
     config
   );
-  //TODOS:
   let food = res.data.item;
   return food;
 };
 
 const deleteFoodWithId = async (foodId) => {
   const res = await axiosInstance.delete("/foods/" + foodId);
-  let food = res.data.item;
-  return food;
+  let message = res.data.message;
+  return message;
 };
 
 export { getFoods, getFoodwithId, createNewFood, deleteFoodWithId, updateFood };

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Typography, Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import themes from "../shared/themes";
+import { PlusCircle } from "@styled-icons/boxicons-solid/";
 
 const StyledBox = styled(Box)`
   ${spacing}
@@ -28,6 +29,11 @@ const LinkWrapper = styled(Link)`
   text-decoration: none;
   color: #000;
 `;
+const StyledAddCircle = styled(PlusCircle)`
+  ${spacing};
+  ${palette};
+  ${sizing};
+`;
 const StyledTypography = styled(Typography)`
   ${spacing}
   ${palette}
@@ -37,12 +43,7 @@ const StyledButtonPrimary = styled(Button)`
   ${palette};
   ${typography};
   ${sizing};
-  /* &.MuiButton-containedSecondary {
-    margin-left: 10px;
-  }
-  &.MuiButton-containedSizeLarge {
-    margin-left: 10px;
-  } */
+
   &.MuiButton-contained {
     background-color: ${themes.light.palette.inputColor};
     &:hover {
@@ -75,6 +76,18 @@ const StyledButtonDelete = styled(Button)`
     }
   }
 `;
+const StyledButtonInteraction = styled(Button)`
+  ${spacing};
+  ${palette};
+  ${typography};
+  ${sizing};
+  &.MuiButton-contained {
+    background-color: ${themes.light.palette.interaction};
+    &:hover {
+      background-color: ${themes.light.palette.interaction};
+    }
+  }
+`;
 export {
   StyledBox,
   LinkWrapper,
@@ -84,4 +97,6 @@ export {
   StyledButtonDelete,
   ButtonWrapper,
   ButtonArea,
+  StyledButtonInteraction,
+  StyledAddCircle,
 };

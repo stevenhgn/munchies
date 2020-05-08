@@ -30,7 +30,7 @@ exports.new = function(req, res) {
     //     res.json(err);
     res.json({
       message: "New food created!",
-      data: food
+      item: food
     });
   });
 };
@@ -57,7 +57,7 @@ exports.update = function(req, res) {
       if (err) res.json(err);
       res.json({
         message: "Food Info updated",
-        data: food
+        item: food
       });
     });
   });

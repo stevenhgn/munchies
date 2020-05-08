@@ -6,6 +6,7 @@ import {
   StyledBox,
   StyledTypography,
 } from "../../shared/StyledSystemComponent";
+import { useHistory } from "react-router-dom";
 import themes from "../../shared/themes";
 import { CardWrapperFullWidth } from "../../shared/CardWrapper";
 import { createNewFood, getFoodwithId, updateFood } from "../../api/foods";
@@ -20,6 +21,7 @@ import {
 } from "../../shared/StyledSystemComponent";
 
 const CreateFood = ({ match }) => {
+  let history = useHistory();
   const [food, setFood] = useState("");
   const foodId = match.params ? match.params.foodId : null;
   const [priceRange, setPriceRange] = React.useState(1);
@@ -56,31 +58,31 @@ const CreateFood = ({ match }) => {
       setPriceRange(food.price_range); // set the selection of price_range if food is found
     }
     if (match.params.foodId != null || match.params.foodId != undefined) {
-      console.log("Id found ", match.params.foodId);
       fetchFoodwithId();
     }
   }, []);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(priceRange);
+  const onSubmit = async (data) => {
     const reqBody = {
-      name: name,
+      name: data.name,
       price: data.price,
       price_range: priceRange,
       image: data.image,
     };
-    createNewFood(reqBody); // call axios api call to create new food with reqBody as data
+    let food = null;
+    if (foodId != null) {
+      food = await updateFood(reqBody, foodId); // call axios api call to create new food with reqBody as data
+    } else {
+      food = await createNewFood(reqBody); // call axios api call to create new food with reqBody as data
+    }
+    if (food != null) history.push("/food/" + food._id); // Navigate to the created/edited food
   };
 
   const handleChange = (event) => {
     // handle pricerange select change
     setPriceRange(event.target.value);
   };
-  console.log("food", food);
-  // setPriceRange(food.priceRange);
   const editMode = !!foodId;
-  console.log("object", foodId);
   return (
     <SecondContentWrapper>
       <CardWrapperFullWidth m={16}>
@@ -100,7 +102,7 @@ const CreateFood = ({ match }) => {
             label="Food name"
             type="input"
             margin="normal"
-            focused={!!editMode}
+            focused={true}
           ></TextFieldWrapper>
           {/* <TextFieldWrapper
             inputRef={register}
@@ -119,7 +121,7 @@ const CreateFood = ({ match }) => {
           <TextFieldWrapper
             name="image"
             inputRef={register}
-            focused={!!editMode}
+            focused={true}
             fullWidth
             id="filled-image-secondary"
             rows="2"
@@ -144,7 +146,8 @@ const CreateFood = ({ match }) => {
             placeholder={"Food price (NOK)"}
             label="Food price"
             margin="normal"
-            focused={!!editMode}
+            focused={true}
+            step={0.5}
           ></TextFieldWrapper>
           <TextFieldWrapper
             name="price_range"
@@ -152,13 +155,13 @@ const CreateFood = ({ match }) => {
             id="standard-select-price-range"
             select
             variant="filled"
-            label="Select"
+            label="Price range ($ - $$$)"
             value={priceRange}
             onChange={handleChange}
             helperText="Select food price range"
             margin="normal"
             width={"300px"}
-            focused={!!editMode}
+            focused={true}
           >
             {priceRanges.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -166,20 +169,22 @@ const CreateFood = ({ match }) => {
               </MenuItem>
             ))}
           </TextFieldWrapper>
-          {editMode ? (
-            <ButtonArea color="white">
-              <ButtonWrapper mr={5}>
-                <StyledButtonPrimary
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  color="inherit"
-                  p={1}
-                  title="Edit food"
-                >
-                  UPDATE
-                </StyledButtonPrimary>
-              </ButtonWrapper>
+
+          <ButtonArea color="white">
+            <ButtonWrapper mr={5}>
+              <StyledButtonPrimary
+                type="submit"
+                variant="contained"
+                size="large"
+                color="inherit"
+                p={1}
+                title="Edit food"
+              >
+                {editMode ? "UPDATE" : "CREATE"}
+              </StyledButtonPrimary>
+            </ButtonWrapper>
+
+            {editMode ? (
               <LinkWrapper to={"/food/" + food._id} key={food._id}>
                 <StyledButtonSecondary
                   type="submit"
@@ -187,26 +192,11 @@ const CreateFood = ({ match }) => {
                   size="large"
                   p={1}
                   title="Cancel edit"
-                  onClick={createNewFood}
                 >
                   <StyledBox color={"primary"}>CANCEL</StyledBox>
                 </StyledButtonSecondary>
               </LinkWrapper>
-            </ButtonArea>
-          ) : (
-            <ButtonArea color="white">
-              <ButtonWrapper mr={5}>
-                <StyledButtonPrimary
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  color="inherit"
-                  p={1}
-                  title="Send in form and create food"
-                >
-                  CREATE
-                </StyledButtonPrimary>
-              </ButtonWrapper>
+            ) : (
               <LinkWrapper to={"/"}>
                 <StyledButtonSecondary
                   type="submit"
@@ -214,13 +204,12 @@ const CreateFood = ({ match }) => {
                   size="large"
                   p={1}
                   title="Send in form and create food"
-                  onClick={createNewFood}
                 >
                   <StyledBox color={"primary"}>CANCEL</StyledBox>
                 </StyledButtonSecondary>
               </LinkWrapper>
-            </ButtonArea>
-          )}
+            )}
+          </ButtonArea>
         </FormWrapper>
       </CardWrapperFullWidth>
     </SecondContentWrapper>
