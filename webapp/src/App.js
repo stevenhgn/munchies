@@ -47,16 +47,11 @@ class App extends React.Component {
 										</Logo>
 										<StyledBox color={'logo'} fontSize={30}>
 											! hungry
-										</StyledBox>
+									</StyledBox>
 									</LinkWrapper>
 									<ThemeContext.Consumer>
 										{({ theme, toggleTheme }) => (
-											<StyledBox
-												mb={4}
-												mr={4}
-												onClick={toggleTheme}
-												style={{ position: 'absolute', right: 0 }}
-											>
+											<StyledBox mb={4} mr={4} onClick={toggleTheme} style={{ position: 'absolute', right: 0 }}>
 												<StyledThemeModeButton variant="contained">
 													<StyledBox color={'white'}>{this.state.themeString}</StyledBox>
 												</StyledThemeModeButton>
@@ -96,7 +91,7 @@ const Header = styled.div`
 	${spacing};
 	${palette};
 	columns: 2;
-	flex-direction: row;
+	flex-direction: row;	
 	display: flex;
 `;
 const Wrapper = styled.div`

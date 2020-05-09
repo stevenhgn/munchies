@@ -21,9 +21,9 @@ import { StyledH1, StyledH3 } from '../../shared/typography';
 
 const FoodEditor = ({ match }) => {
 	let history = useHistory();
-	const [ food, setFood ] = useState('');
+	const [food, setFood] = useState('');
 	const foodId = match.params ? match.params.foodId : null;
-	const [ priceRange, setPriceRange ] = React.useState(1);
+	const [priceRange, setPriceRange] = React.useState(1);
 	const priceRanges = [
 		{
 			value: 1,
@@ -201,18 +201,18 @@ const FoodEditor = ({ match }) => {
 								</StyledButtonSecondary>
 							</LinkWrapper>
 						) : (
-							<LinkWrapper to={'/'}>
-								<StyledButtonSecondary
-									type="submit"
-									variant="contained"
-									size="large"
-									p={1}
-									title="Send in form and create food"
-								>
-									<StyledBox color={'primary'}>CANCEL</StyledBox>
-								</StyledButtonSecondary>
-							</LinkWrapper>
-						)}
+								<LinkWrapper to={'/'}>
+									<StyledButtonSecondary
+										type="submit"
+										variant="contained"
+										size="large"
+										p={1}
+										title="Send in form and create food"
+									>
+										<StyledBox color={'primary'}>CANCEL</StyledBox>
+									</StyledButtonSecondary>
+								</LinkWrapper>
+							)}
 					</ButtonArea>
 				</FormWrapper>
 			</DivWrapperHalfWidth>

@@ -63,13 +63,13 @@ const CardMediaWrapper = styled(CardMedia)`
 `;
 
 export {
-	CardWrapper,
-	CardActionsWrapper,
-	CardActionAreaWrapper,
-	CardContentWrapper,
-	CardMediaWrapper,
-	CardWrapperFullWidth,
-	CardWrapperFlexColumn,
-	CardWrapperFlex,
-	DivWrapperHalfWidth
+  CardWrapper,
+  CardActionsWrapper,
+  CardActionAreaWrapper,
+  CardContentWrapper,
+  CardMediaWrapper,
+  CardWrapperFullWidth,
+  CardWrapperFlexColumn,
+  CardWrapperFlex,
+  DivWrapperHalfWidth
 };

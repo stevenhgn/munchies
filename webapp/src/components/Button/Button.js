@@ -72,10 +72,10 @@ const StyledButtonInteraction = styled(Button)`
 `;
 
 export {
-	StyledButtonPrimary,
-	StyledButtonSecondary,
-	StyledButtonDelete,
-	ButtonWrapper,
-	ButtonArea,
-	StyledButtonInteraction
+  StyledButtonPrimary,
+  StyledButtonSecondary,
+  StyledButtonDelete,
+  ButtonWrapper,
+  ButtonArea,
+  StyledButtonInteraction
 };
