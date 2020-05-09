@@ -9,16 +9,15 @@ import { createNewFood, getFoodwithId, updateFood } from '../../api/foods';
 import { TextField, MenuItem } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import {
-	LinkWrapper,
-	ButtonWrapper,
 	StyledButtonPrimary,
 	StyledButtonSecondary,
-	StyledTypography,
+	ButtonWrapper,
 	ButtonArea,
-	StyledH3,
-	StyledBox,
-	StyledH1
-} from '../../shared/StyledHtmlTags';
+	LinkWrapper,
+	StyledBox
+} from '../../components';
+
+import { StyledH1, StyledH3 } from '../../shared/typography';
 
 const FoodEditor = ({ match }) => {
 	let history = useHistory();
@@ -93,7 +92,8 @@ const FoodEditor = ({ match }) => {
 					<StyledH3 color={'interaction'}>{'< All Munchies'}</StyledH3>
 				</LinkWrapper>
 			</ButtonWrapper>
-			<StyledTypography variant={'h3'}>{editMode ? 'Edit ' + food.name : 'Create new food'}</StyledTypography>
+			<StyledH1 color="white">{editMode ? 'Edit ' + food.name : 'Create new food'}</StyledH1>
+
 			<DivWrapperHalfWidth mt={8} bgcolor={'cardBackgroundColor'}>
 				<FormWrapper onSubmit={handleSubmit(onSubmit)} p={20} pl={30} pr={30}>
 					<TextFieldWrapper

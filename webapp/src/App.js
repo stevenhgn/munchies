@@ -9,9 +9,10 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import FoodEditor from './pages/FoodEditor/FoodEditor.js';
 import FoodDetail from './pages/FoodDetail/FoodDetail.js';
-import { LinkWrapper, StyledBox, Logo } from './shared/StyledHtmlTags';
 import { spacing, palette, typography, sizing } from '@material-ui/system';
 import css from './App.css';
+import { LinkWrapper, StyledBox } from './components';
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -106,5 +107,9 @@ const AppContent = styled.div`
 	${spacing};
 	max-width: 1280px;
 	margin: auto;
+`;
+
+const Logo = styled(StyledBox)`
+  font-family: "Sansita", sans-serif;
 `;
 export default hot(App);

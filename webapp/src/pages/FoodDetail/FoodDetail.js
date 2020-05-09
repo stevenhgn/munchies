@@ -7,16 +7,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
-import {
-	StyledBox,
-	LinkWrapper,
-	StyledButtonPrimary,
-	StyledButtonDelete,
-	ButtonWrapper,
-	ButtonArea,
-	StyledH3,
-	StyledH1
-} from '../../shared/StyledHtmlTags';
+import { LinkWrapper } from '../../shared/StyledHtmlTags';
+import { StyledButtonPrimary, StyledButtonDelete, ButtonWrapper, ButtonArea, StyledBox } from '../../components';
+import { StyledH1, StyledH3 } from '../../shared/typography';
 import { CardActionsWrapper, CardWrapper, CardWrapperFlexColumn, CardWrapperFlex } from '../../shared/CardWrapper';
 import { getFoodwithId, deleteFoodWithId } from '../../api/foods';
 
