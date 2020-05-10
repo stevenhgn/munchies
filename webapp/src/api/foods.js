@@ -19,6 +19,7 @@ const getFoodwithId = async (foodId) => {
 const createNewFood = async (reqBody) => {
   const res = await axiosInstance.post("/foods", qs.stringify(reqBody), config);
   let food = res.data.item;
+  console.warn("res: ", res.data.item);
   return food;
 };
 const updateFood = async (reqBody, foodId) => {

@@ -81,7 +81,9 @@ const CreateFood = ({ match }) => {
     } else {
       food = await createNewFood(reqBody); // call axios api call to create new food with reqBody as data
     }
-    if (food != null) history.push("/food/" + food._id); // Navigate to the created/edited food
+    if (food != null && food.hasDuplicate) {
+      console.log("Has duplicate");
+    } else history.push("/food/" + food._id); // Navigate to the created/edited food
   };
 
   const handleChange = (event) => {
@@ -96,8 +98,8 @@ const CreateFood = ({ match }) => {
           <StyledH3 color={"interaction"}>{"< All Munchies"}</StyledH3>
         </LinkWrapper>
       </ButtonWrapper>
-      <StyledTypography variant={"h3"}>
-        {editMode ? "Edit " + food.name : "Create new food"}
+      <StyledTypography variant={"h4"}>
+        {editMode ? "EDIT " + food.name : "CREATE NEW FOOD"}
       </StyledTypography>
       <DivWrapperHalfWidth mt={8} bgcolor={"cardBackgroundColor"}>
         <FormWrapper onSubmit={handleSubmit(onSubmit)} p={20} pl={30} pr={30}>
