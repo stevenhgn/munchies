@@ -1,15 +1,13 @@
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import styled from "styled-components";
-import { spacing, palette, typography } from "@material-ui/system";
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import styled from 'styled-components';
+import { spacing, palette, typography } from '@material-ui/system';
 
-const IWrapper = styled.i`
-  ${spacing};
-  ${palette};
-`;
+// TODO: Need some refactor afterward.
+
 const CardWrapper = styled(Card)`
   ${spacing};
   ${palette};
@@ -65,7 +63,6 @@ const CardMediaWrapper = styled(CardMedia)`
 `;
 
 export {
-  IWrapper,
   CardWrapper,
   CardActionsWrapper,
   CardActionAreaWrapper,

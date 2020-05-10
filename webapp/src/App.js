@@ -1,17 +1,18 @@
-import React from "react";
-import { hot } from "react-hot-loader/root";
-import styled from "styled-components";
-import Home from "./pages/home/Home";
-import { ThemeProvider } from "styled-components";
-import ThemeContext from "./theme-context";
-import themes from "./shared/themes";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import FoodOverview from "./components/Food/FoodOverview";
-import CreateFood from "./components/Food/CreateFood";
-import { LinkWrapper, StyledBox, Logo } from "./shared/StyledSystemComponent";
-import { spacing, palette, typography, sizing } from "@material-ui/system";
-import css from "./App.css";
+import React from 'react';
+import { hot } from 'react-hot-loader/root';
+import styled from 'styled-components';
+import Home from './pages/Home/Home';
+import { ThemeProvider } from 'styled-components';
+import ThemeContext from './theme-context';
+import themes from './shared/themes';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import FoodEditor from './pages/FoodEditor/FoodEditor.js';
+import FoodDetail from './pages/FoodDetail/FoodDetail.js';
+import { spacing, palette, typography, sizing } from '@material-ui/system';
+import css from './App.css';
+import { LinkWrapper, StyledBox } from './components';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +20,7 @@ class App extends React.Component {
     this.toggleTheme = () => {
       this.setState((state) => ({
         theme: state.theme === themes.dark ? themes.light : themes.dark,
-        themeString: state.theme === themes.dark ? "Dark mode" : "Light mode",
+        themeString: state.theme === themes.dark ? 'Dark mode' : 'Light mode',
       }));
     };
 
@@ -28,7 +29,7 @@ class App extends React.Component {
     this.state = {
       theme: themes.light,
       toggleTheme: this.toggleTheme,
-      themeString: "Dark mode",
+      themeString: 'Dark mode',
     };
   }
 
@@ -41,33 +42,26 @@ class App extends React.Component {
               <AppContent p={4}>
                 <Header>
                   <LinkWrapper to="/">
-                    <Logo color={"logo"} fontSize={60}>
+                    <Logo color={'logo'} fontSize={60}>
                       MUNCHIES
                     </Logo>
-                    <StyledBox color={"logo"} fontSize={30}>
+                    <StyledBox color={'logo'} fontSize={30}>
                       ! hungry
                     </StyledBox>
                   </LinkWrapper>
                   <ThemeContext.Consumer>
                     {({ theme, toggleTheme }) => (
-                      <StyledBox
-                        mb={4}
-                        mr={4}
-                        onClick={toggleTheme}
-                        style={{ position: "absolute", right: 0 }}
-                      >
+                      <StyledBox mb={4} mr={4} onClick={toggleTheme} style={{ position: 'absolute', right: 0 }}>
                         <StyledThemeModeButton variant="contained">
-                          <StyledBox color={"white"}>
-                            {this.state.themeString}
-                          </StyledBox>
+                          <StyledBox color={'white'}>{this.state.themeString}</StyledBox>
                         </StyledThemeModeButton>
                       </StyledBox>
                     )}
                   </ThemeContext.Consumer>
                 </Header>
                 <Switch>
-                  <Route path="/food/:foodId" component={FoodOverview} />
-                  <Route path="/createFood/:foodId?" component={CreateFood} />
+                  <Route path="/food/:foodId" component={FoodDetail} />
+                  <Route path="/createFood/:foodId?" component={FoodEditor} />
                   <Route path="/">
                     <Home color={this.state.theme} />
                   </Route>
@@ -108,5 +102,9 @@ const AppContent = styled.div`
   ${spacing};
   max-width: 1280px;
   margin: auto;
+`;
+
+const Logo = styled(StyledBox)`
+  font-family: 'Sansita', sans-serif;
 `;
 export default hot(App);
