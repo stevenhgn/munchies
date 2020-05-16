@@ -82,6 +82,7 @@ const FoodEditor = ({ match }) => {
 			<ButtonWrapper>
 				<LinkWrapper to={'/'}>
 					<StyledH3 color={'interaction'}>{'< All Munchies'}</StyledH3>
+					
 				</LinkWrapper>
 			</ButtonWrapper>
 			<StyledH1 color="white">{editMode ? 'Edit ' + food.name : 'Create new food'}</StyledH1>
