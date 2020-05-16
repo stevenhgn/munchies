@@ -4,7 +4,6 @@ import { spacing, palette, typography, sizing } from '@material-ui/system';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import themes from '../../shared/themes';
-import { CardWrapperFullWidth, DivWrapperHalfWidth } from '../../shared/CardWrapper';
 import { createNewFood, getFoodwithId, updateFood } from '../../api/foods';
 import { TextField, MenuItem } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
@@ -86,7 +85,7 @@ const FoodEditor = ({ match }) => {
 	};
 	const editMode = !!foodId;
 	return (
-		<SecondContentWrapper>
+		<Wrapper>
 			<ButtonWrapper>
 				<LinkWrapper to={'/'}>
 					<StyledH3 color={'interaction'}>{'< All Munchies'}</StyledH3>
@@ -94,7 +93,7 @@ const FoodEditor = ({ match }) => {
 			</ButtonWrapper>
 			<StyledH1 color="white">{editMode ? 'Edit ' + food.name : 'Create new food'}</StyledH1>
 
-			<DivWrapperHalfWidth mt={8} bgcolor={'cardBackgroundColor'}>
+			<Content mt={8} bgcolor={'cardBackgroundColor'}>
 				<FormWrapper onSubmit={handleSubmit(onSubmit)} p={20} pl={30} pr={30}>
 					<TextFieldWrapper
 						name="name"
@@ -215,12 +214,12 @@ const FoodEditor = ({ match }) => {
 							)}
 					</ButtonArea>
 				</FormWrapper>
-			</DivWrapperHalfWidth>
-		</SecondContentWrapper>
+			</Content>
+		</Wrapper>
 	);
 };
 
-const SecondContentWrapper = styled.div`
+const Wrapper = styled.div`
 	${spacing};
 	${palette};
 	${typography};
@@ -228,6 +227,16 @@ const SecondContentWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 `;
+
+const Content = styled.div`
+	${spacing};
+	${palette};
+	max-width: 50%;
+	display: flex;
+	justify-content: center;
+	border-radius: 15px;
+`;
+
 const TextFieldWrapper = styled(TextField)`
   color: primary;
   .MuiFormLabel-root.Mui-focused {

@@ -6,11 +6,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-
-import { LinkWrapper } from '../../shared/StyledHtmlTags';
-import { StyledButtonPrimary, StyledButtonDelete, ButtonWrapper, ButtonArea, StyledBox } from '../../components';
+import Card from '@material-ui/core/Card';
+import { StyledButtonPrimary, StyledButtonDelete, ButtonWrapper, ButtonArea, StyledBox, LinkWrapper } from '../../components';
 import { StyledH1, StyledH3 } from '../../shared/typography';
-import { CardActionsWrapper, CardWrapper, CardWrapperFlexColumn, CardWrapperFlex } from '../../shared/CardWrapper';
 import { getFoodwithId, deleteFoodWithId } from '../../api/foods';
 
 const FoodOverview = ({ match }) => {
@@ -45,13 +43,13 @@ const FoodOverview = ({ match }) => {
 		priceRange += '$';
 	}
 	return (
-		<SecondContentWrapper>
+		<Wrapper>
 			<ButtonWrapper>
 				<LinkWrapper to={'/'}>
 					<StyledH3 color={'interaction'}>{'< All Munchies'}</StyledH3>
 				</LinkWrapper>
 			</ButtonWrapper>
-			<CardWrapperFlex bgcolor={'cardBackgroundColor'} m={4}>
+			<CardWrapper bgcolor={'cardBackgroundColor'} m={4}>
 				<ImgWrapper src={food.image} />
 				<CardContentWrapper bgcolor={'cardBackgroundColor'}>
 					<CardDescription ml={4}>
@@ -76,7 +74,7 @@ const FoodOverview = ({ match }) => {
 						</StyledButtonDelete>
 					</ButtonArea>
 				</CardContentWrapper>
-			</CardWrapperFlex>
+			</CardWrapper>
 			<Dialog
 				open={open}
 				onClose={toggleDialog}
@@ -94,9 +92,16 @@ const FoodOverview = ({ match }) => {
 					</Button>
 				</DialogActions>
 			</Dialog>
-		</SecondContentWrapper>
+		</Wrapper>
 	);
 };
+
+const CardWrapper = styled(Card)`
+  ${spacing};
+  ${palette};
+  display: flex;
+`
+
 const CardContentWrapper = styled.div`
 	${spacing};
 	${palette};
@@ -122,7 +127,7 @@ const StyledH4 = styled.h4`
 	font-weight: 300;
 `;
 
-const SecondContentWrapper = styled.div`
+const Wrapper = styled.div`
 	${spacing};
 	${palette};
 	${typography};
