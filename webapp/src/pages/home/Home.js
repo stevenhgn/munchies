@@ -3,16 +3,13 @@ import { Card } from '../../components';
 import StyledChip from '../../components/Chip/Chip';
 import { spacing, palette, typography, sizing } from '@material-ui/system';
 import styled from 'styled-components';
-import ThemeContext from '../../theme-context';
 import { getFoods } from '../../api/foods';
 import { StyledButtonInteraction, ButtonWrapper, ButtonArea, LinkWrapper, StyledTooltip, StyledBox } from '../../components';
 import { PlusCircle } from '@styled-icons/boxicons-solid/';
 
 import Grid from '@material-ui/core/Grid';
-import themes from '../../shared/themes';
 var Home = (props) => {
   const [foods, setFoods] = useState([]);
-  const [filteredFoods, setFilteredFoods] = useState([]);
   const [chipData, setChipData] = useState([
     { key: 1, label: '$', tooltip: '0-75 NOK', clicked: false },
     { key: 2, label: '$$ ', tooltip: ' 75-150 NOK', clicked: false },
@@ -20,9 +17,8 @@ var Home = (props) => {
   ]);
   useEffect(() => {
     async function fetchFood() {
-      const foods = await getFoods(null);
+      const foods = await getFoods();
       setFoods(foods);
-      setFilteredFoods(foods);
     }
     fetchFood();
   }, []);
@@ -30,18 +26,17 @@ var Home = (props) => {
   const handleClick = (chipClicked) => async () => {
     chipClicked.clicked = !chipClicked.clicked;
     setChipData((chips) => chips.filter((chip) => chip.key != null)); // TODOS: Is this the best solution?
-    let filteredFoods = [];
+    var filteredParameter = '';
     chipData.forEach((chip) => {
       if (chip.clicked) {
-        filteredFoods.push(
-          ...foods.filter((food) => food.price_range == chip.key), // ... flatten list
-        );
+        filteredParameter = filteredParameter + chip.key + ',';
       }
-      setFilteredFoods(filteredFoods);
     });
+    const foods = await getFoods(filteredParameter.slice(0, filteredParameter.length - 1));
+    setFoods(foods);
 
-    if (filteredFoods.length === 0) {
-      setFilteredFoods(foods);
+    if (foods.length === 0) {
+      setFoods(foods);
     }
   };
 
@@ -76,7 +71,7 @@ var Home = (props) => {
       <Grid container spacing={3}>
         {foods.length === 0
           ? 'Fetching foods...'
-          : filteredFoods.map((food) => (
+          : foods.map((food) => (
               <Grid item key={food._id}>
                 <LinkWrapper to={'/food/' + food._id} key={food._id}>
                   <Card key={food._id} name={food.name} image={food.image} price={food.price} price_range={food.price_range} />
