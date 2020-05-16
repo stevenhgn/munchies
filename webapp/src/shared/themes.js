@@ -33,6 +33,7 @@ const themes = {
 
       //https://material.io/design/color/dark-theme.html#properties
       backgroundColor: "#1F1A24", // Material reccommended dark theme surface color
+      // #333
       // backgroundColor: "#332940", //2.versjon
       cardBackgroundColor: "#121212", // Material reccommended dark theme surface color
     },

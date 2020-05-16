@@ -7,77 +7,70 @@ import themes from '../../shared/themes';
 import { createNewFood, getFoodwithId, updateFood } from '../../api/foods';
 import { TextField, MenuItem } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
-import {
-	StyledButtonPrimary,
-	StyledButtonSecondary,
-	ButtonWrapper,
-	ButtonArea,
-	LinkWrapper,
-	StyledBox
-} from '../../components';
+import { StyledButtonPrimary, StyledButtonSecondary, ButtonWrapper, ButtonArea, LinkWrapper, StyledBox } from '../../components';
 
 import { StyledH1, StyledH3 } from '../../shared/typography';
 
 const FoodEditor = ({ match }) => {
-	let history = useHistory();
-	const [food, setFood] = useState('');
-	const foodId = match.params ? match.params.foodId : null;
-	const [priceRange, setPriceRange] = React.useState(1);
-	const priceRanges = [
-		{
-			value: 1,
-			label: '$ (0-75 NOK)'
-		},
-		{
-			value: 2,
-			label: '$$ (75-150 NOK)'
-		},
-		{
-			value: 3,
-			label: '$$$ (150-300 NOK)'
-		}
-	];
+  let history = useHistory();
+  const [food, setFood] = useState('');
+  const foodId = match.params ? match.params.foodId : null;
+  const [priceRange, setPriceRange] = React.useState(1);
+  const priceRanges = [
+    {
+      value: 1,
+      label: '$ (0-75 NOK)',
+    },
+    {
+      value: 2,
+      label: '$$ (75-150 NOK)',
+    },
+    {
+      value: 3,
+      label: '$$$ (150-300 NOK)',
+    },
+  ];
 
-	const { register, handleSubmit, setValue, setError } = useForm({
-		defaultValues: {
-			name: '',
-			image: '',
-			description: '',
-			price: 0,
-			price_range: priceRange
-		}
-	});
-	useEffect(() => {
-		async function fetchFoodwithId() {
-			const food = await getFoodwithId(foodId);
-			setFood(food);
-			setValue('name', food.name);
-			setValue('image', food.image);
-			setValue('price', food.price);
-			setValue('description', food.description);
-			setPriceRange(food.price_range); // set the selection of price_range if food is found
-		}
-		if (match.params.foodId != null || match.params.foodId != undefined) {
-			fetchFoodwithId();
-		}
-	}, []);
+  const { register, handleSubmit, setValue, setError } = useForm({
+    defaultValues: {
+      name: '',
+      image: '',
+      description: '',
+      price: 0,
+      price_range: priceRange,
+    },
+  });
+  useEffect(() => {
+    async function fetchFoodwithId() {
+      const food = await getFoodwithId(foodId);
+      setFood(food);
+      setValue('name', food.name);
+      setValue('image', food.image);
+      setValue('price', food.price);
+      setValue('description', food.description);
+      setPriceRange(food.price_range); // set the selection of price_range if food is found
+    }
+    if (match.params.foodId != null || match.params.foodId != undefined) {
+      fetchFoodwithId();
+    }
+  }, []);
 
-	const onSubmit = async (data) => {
-		const reqBody = {
-			name: data.name,
-			price: data.price,
-			price_range: priceRange,
-			image: data.image,
-			description: data.description
-		};
-		let food = null;
-		if (foodId != null) {
-			food = await updateFood(reqBody, foodId); // call axios api call to create new food with reqBody as data
-		} else {
-			food = await createNewFood(reqBody); // call axios api call to create new food with reqBody as data
-		}
-		if (food != null) history.push('/food/' + food._id); // Navigate to the created/edited food
-	};
+  const onSubmit = async (data) => {
+    const reqBody = {
+      name: data.name,
+      price: data.price,
+      price_range: priceRange,
+      image: data.image,
+      description: data.description,
+    };
+    let food = null;
+    if (foodId != null) {
+      food = await updateFood(reqBody, foodId); // call axios api call to create new food with reqBody as data
+    } else {
+      food = await createNewFood(reqBody); // call axios api call to create new food with reqBody as data
+    }
+    if (food != null) history.push('/food/' + food._id); // Navigate to the created/edited food
+  };
 
 	const handleChange = (event) => {
 		// handle pricerange select change
@@ -173,19 +166,12 @@ const FoodEditor = ({ match }) => {
 						))}
 					</TextFieldWrapper>
 
-					<ButtonArea color="white" mt={5}>
-						<ButtonWrapper mr={5}>
-							<StyledButtonPrimary
-								type="submit"
-								variant="contained"
-								size="large"
-								color="inherit"
-								p={1}
-								title="Edit food"
-							>
-								{editMode ? 'UPDATE' : 'CREATE'}
-							</StyledButtonPrimary>
-						</ButtonWrapper>
+          <ButtonArea color="white" mt={5}>
+            <ButtonWrapper mr={5}>
+              <StyledButtonPrimary type="submit" variant="contained" size="large" color="inherit" p={1} title="Edit food">
+                {editMode ? 'UPDATE' : 'CREATE'}
+              </StyledButtonPrimary>
+            </ButtonWrapper>
 
 						{editMode ? (
 							<LinkWrapper to={'/food/' + food._id} key={food._id}>
@@ -256,11 +242,11 @@ const TextFieldWrapper = styled(TextField)`
 `;
 
 const FormWrapper = styled.form`
-	${spacing};
-	${palette};
-	${typography};
-	display: flex;
-	flex-direction: column;
+  ${spacing};
+  ${palette};
+  ${typography};
+  display: flex;
+  flex-direction: column;
 `;
 
 export default FoodEditor;

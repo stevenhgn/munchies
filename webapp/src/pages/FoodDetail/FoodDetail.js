@@ -7,32 +7,33 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
-import { StyledButtonPrimary, StyledButtonDelete, ButtonWrapper, ButtonArea, StyledBox, LinkWrapper } from '../../components';
+import LinkWrapper from '../../components/Link/Link';
+import { StyledButtonPrimary, StyledButtonDelete, ButtonWrapper, ButtonArea, StyledBox } from '../../components';
 import { StyledH1, StyledH3 } from '../../shared/typography';
 import { getFoodwithId, deleteFoodWithId } from '../../api/foods';
 
 const FoodOverview = ({ match }) => {
-	let history = useHistory();
-	const foodId = match.params.foodId;
-	const [ food, setFood ] = useState('');
-	const [ open, setOpen ] = useState(false);
+  let history = useHistory();
+  const foodId = match.params.foodId;
+  const [food, setFood] = useState('');
+  const [open, setOpen] = useState(false);
 
-	const toggleDialog = () => {
-		setOpen(!open);
-	};
-	const onAgreeDelete = async () => {
-		setOpen(!open);
-		const msg = await deleteFoodWithId(foodId);
-		if (msg === 'Food deleted') history.push('/');
-	};
+  const toggleDialog = () => {
+    setOpen(!open);
+  };
+  const onAgreeDelete = async () => {
+    setOpen(!open);
+    const msg = await deleteFoodWithId(foodId);
+    if (msg === 'Food deleted') history.push('/');
+  };
 
-	useEffect(() => {
-		async function fetchFoodwithId() {
-			const food = await getFoodwithId(foodId);
-			setFood(food);
-		}
-		fetchFoodwithId();
-	}, []);
+  useEffect(() => {
+    async function fetchFoodwithId() {
+      const food = await getFoodwithId(foodId);
+      setFood(food);
+    }
+    fetchFoodwithId();
+  }, []);
 
 	const editFood = () => {};
 	if (food === null) {
@@ -103,28 +104,28 @@ const CardWrapper = styled(Card)`
 `
 
 const CardContentWrapper = styled.div`
-	${spacing};
-	${palette};
-	${typography};
-	flex: 1;
-	display: flex;
-	flex-direction: column;
+  ${spacing};
+  ${palette};
+  ${typography};
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
 const CardDescription = styled.div`
-	${spacing};
-	${palette};
-	${typography};
-	flex: 1;
-	display: flex;
-	flex-direction: column;
+  ${spacing};
+  ${palette};
+  ${typography};
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledH4 = styled.h4`
-	${spacing};
-	${palette};
-	${typography};
-	font-family: "Roboto", sans-serif;
-	font-weight: 300;
+  ${spacing};
+  ${palette};
+  ${typography};
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 `;
 
 const Wrapper = styled.div`
@@ -136,9 +137,9 @@ const Wrapper = styled.div`
 `;
 
 const ImgWrapper = styled.img`
-	max-height: 500px;
-	width: 50%;
-	height: 100%;
-	object-fit: cover;
+  max-height: 500px;
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
 `;
 export default FoodOverview;

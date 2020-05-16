@@ -10,13 +10,13 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 
 const useStyles = makeStyles({
-	root: {
-		minWidth: 300
-		// maxWidth: 500,
-	},
-	media: {
-		height: 150
-	}
+  root: {
+    minWidth: 300,
+    // maxWidth: 500,
+  },
+  media: {
+    height: 150,
+  },
 });
 
 const MunchiesCard = (props) => {
