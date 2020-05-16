@@ -45,11 +45,11 @@ class App extends React.Component {
 										<Logo color={'logo'} fontSize={60}>
 											MUNCHIES
 										</Logo>
-										<StyledBox color={'logo'} fontSize={30}>
+										<StyledBox color={'subLogo'} fontSize={30}>
 											! hungry
 									</StyledBox>
 									</LinkWrapper>
-									<ThemeContext.Consumer>
+									{/* <ThemeContext.Consumer>
 										{({ theme, toggleTheme }) => (
 											<StyledBox mb={4} mr={4} onClick={toggleTheme} style={{ position: 'absolute', right: 0 }}>
 												<StyledThemeModeButton variant="contained">
@@ -57,7 +57,7 @@ class App extends React.Component {
 												</StyledThemeModeButton>
 											</StyledBox>
 										)}
-									</ThemeContext.Consumer>
+									</ThemeContext.Consumer> */}
 								</Header>
 								<Switch>
 									<Route path="/food/:foodId" component={FoodDetail} />

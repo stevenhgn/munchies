@@ -1,5 +1,6 @@
 import React from "react";
 
+// TODO: default is dark theme, refactor to correct theme name
 const themes = {
   light: {
     spacing: 4,
@@ -7,12 +8,13 @@ const themes = {
       primary: "black",
       secondary: "#E53935",
       third: "#ff634d",
-      logo: "#FCE7E7",
-      money: "#27AE60",
+      logo: "#FFA000",
+      subLogo: "#FFD951",
+      money: "#F2994A",
       inputColor: "#42A5F5",
       interaction: "#FFE898",
       priceRange: "#ffaaaa",
-      backgroundColor: "#C62828",
+      backgroundColor: "#333333",
       // cardBackgroundColor: "white",
       cardBackgroundColor: "#F5f5f5",
       h3: "white",
