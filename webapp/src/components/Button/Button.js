@@ -5,18 +5,18 @@ import themes from '../../shared/themes';
 
 // TODO: Need refactor
 const ButtonWrapper = styled.div`
-	${spacing};
-	${palette};
-	${typography};
-	display: flex;
-	justify-content: center;
+  ${spacing};
+  ${palette};
+  ${typography};
+  display: flex;
+  justify-content: center;
 `;
 const ButtonArea = styled.div`
-	${spacing};
-	${palette};
-	${typography};
-	display: flex;
-	justify-content: center;
+  ${spacing};
+  ${palette};
+  ${typography};
+  display: flex;
+  justify-content: center;
 `;
 
 const StyledButtonPrimary = styled(Button)`
@@ -71,11 +71,4 @@ const StyledButtonInteraction = styled(Button)`
   }
 `;
 
-export {
-  StyledButtonPrimary,
-  StyledButtonSecondary,
-  StyledButtonDelete,
-  ButtonWrapper,
-  ButtonArea,
-  StyledButtonInteraction
-};
+export { StyledButtonPrimary, StyledButtonSecondary, StyledButtonDelete, ButtonWrapper, ButtonArea, StyledButtonInteraction };

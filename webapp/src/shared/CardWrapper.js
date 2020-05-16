@@ -30,12 +30,12 @@ const CardWrapperFullWidth = styled(Card)`
   height: 100%;
 `;
 const DivWrapperHalfWidth = styled.div`
-	${spacing};
-	${palette};
-	max-width: 50%;
-	display: flex;
-	justify-content: center;
-	border-radius: 15px;
+  ${spacing};
+  ${palette};
+  max-width: 50%;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
 `;
 const CardActionsWrapper = styled(CardActions)`
   ${spacing};
@@ -71,5 +71,5 @@ export {
   CardWrapperFullWidth,
   CardWrapperFlexColumn,
   CardWrapperFlex,
-  DivWrapperHalfWidth
+  DivWrapperHalfWidth,
 };

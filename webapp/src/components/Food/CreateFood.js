@@ -1,42 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { spacing, palette, typography, sizing } from '@material-ui/system';
-import Button from '@material-ui/core/Button';
-import { useHistory } from 'react-router-dom';
-import themes from '../../shared/themes';
-import { CardWrapperFullWidth, DivWrapperHalfWidth } from '../../shared/CardWrapper';
-import { createNewFood, getFoodwithId, updateFood } from '../../api/foods';
-import { TextField, MenuItem } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
-import { StyledButtonPrimary, StyledButtonSecondary, ButtonWrapper, ButtonArea, LinkWrapper, StyledBox } from '../../components';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { spacing, palette, typography, sizing } from "@material-ui/system";
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
+import themes from "../../shared/themes";
+import {
+  CardWrapperFullWidth,
+  DivWrapperHalfWidth,
+} from "../../shared/CardWrapper";
+import { createNewFood, getFoodwithId, updateFood } from "../../api/foods";
+import { TextField, MenuItem } from "@material-ui/core";
+import { useForm } from "react-hook-form";
+import {
+  LinkWrapper,
+  ButtonWrapper,
+  StyledButtonPrimary,
+  StyledButtonSecondary,
+  StyledTypography,
+  ButtonArea,
+  StyledH3,
+  StyledBox,
+  StyledH1,
+} from "../../shared/StyledSystemComponent";
 
-import { StyledH1, StyledH3 } from '../../shared/typography';
-
-const FoodEditor = ({ match }) => {
+const CreateFood = ({ match }) => {
   let history = useHistory();
-  const [food, setFood] = useState('');
+  const [food, setFood] = useState("");
   const foodId = match.params ? match.params.foodId : null;
   const [priceRange, setPriceRange] = React.useState(1);
   const priceRanges = [
     {
       value: 1,
-      label: '$ (0-75 NOK)',
+      label: "$ (0-75 NOK)",
     },
     {
       value: 2,
-      label: '$$ (75-150 NOK)',
+      label: "$$ (75-150 NOK)",
     },
     {
       value: 3,
-      label: '$$$ (150-300 NOK)',
+      label: "$$$ (150-300 NOK)",
     },
   ];
 
   const { register, handleSubmit, setValue, setError } = useForm({
     defaultValues: {
-      name: '',
-      image: '',
-      description: '',
+      name: "",
+      image: "",
+      description: "",
       price: 0,
       price_range: priceRange,
     },
@@ -45,10 +56,10 @@ const FoodEditor = ({ match }) => {
     async function fetchFoodwithId() {
       const food = await getFoodwithId(foodId);
       setFood(food);
-      setValue('name', food.name);
-      setValue('image', food.image);
-      setValue('price', food.price);
-      setValue('description', food.description);
+      setValue("name", food.name);
+      setValue("image", food.image);
+      setValue("price", food.price);
+      setValue("description", food.description);
       setPriceRange(food.price_range); // set the selection of price_range if food is found
     }
     if (match.params.foodId != null || match.params.foodId != undefined) {
@@ -70,7 +81,9 @@ const FoodEditor = ({ match }) => {
     } else {
       food = await createNewFood(reqBody); // call axios api call to create new food with reqBody as data
     }
-    if (food != null) history.push('/food/' + food._id); // Navigate to the created/edited food
+    if (food != null && food.hasDuplicate) {
+      console.log("Has duplicate");
+    } else history.push("/food/" + food._id); // Navigate to the created/edited food
   };
 
   const handleChange = (event) => {
@@ -81,13 +94,14 @@ const FoodEditor = ({ match }) => {
   return (
     <SecondContentWrapper>
       <ButtonWrapper>
-        <LinkWrapper to={'/'}>
-          <StyledH3 color={'interaction'}>{'< All Munchies'}</StyledH3>
+        <LinkWrapper to={"/"}>
+          <StyledH3 color={"interaction"}>{"< All Munchies"}</StyledH3>
         </LinkWrapper>
       </ButtonWrapper>
-      <StyledH1 color="white">{editMode ? 'Edit ' + food.name : 'Create new food'}</StyledH1>
-
-      <DivWrapperHalfWidth mt={8} bgcolor={'cardBackgroundColor'}>
+      <StyledTypography variant={"h4"}>
+        {editMode ? "EDIT " + food.name : "CREATE NEW FOOD"}
+      </StyledTypography>
+      <DivWrapperHalfWidth mt={8} bgcolor={"cardBackgroundColor"}>
         <FormWrapper onSubmit={handleSubmit(onSubmit)} p={20} pl={30} pr={30}>
           <TextFieldWrapper
             name="name"
@@ -96,12 +110,12 @@ const FoodEditor = ({ match }) => {
             title="Insert the food name"
             variant="filled"
             required
-            placeholder={'Food name'}
+            placeholder={"Food name"}
             label="Food name"
             type="input"
             margin="normal"
             focused={true}
-          />
+          ></TextFieldWrapper>
           <TextFieldWrapper
             name="description"
             inputRef={register}
@@ -110,13 +124,13 @@ const FoodEditor = ({ match }) => {
             rows="3"
             variant="filled"
             required
-            placeholder={'Food description'}
+            placeholder={"Food description"}
             label="Food description"
             type="input"
             margin="normal"
             multiline={true}
             focused={true}
-          />
+          ></TextFieldWrapper>
           <TextFieldWrapper
             name="image"
             inputRef={register}
@@ -126,12 +140,12 @@ const FoodEditor = ({ match }) => {
             title="Insert the food image"
             variant="filled"
             required
-            placeholder={'Food image (url)'}
+            placeholder={"Food image (url)"}
             label="Food image"
             multiline={true}
             type="text"
             margin="normal"
-          />
+          ></TextFieldWrapper>
           <TextFieldWrapper
             name="price"
             type="number"
@@ -140,12 +154,12 @@ const FoodEditor = ({ match }) => {
             title="Insert the food image"
             variant="filled"
             required
-            placeholder={'Food price (NOK)'}
+            placeholder={"Food price (NOK)"}
             label="Food price"
             margin="normal"
             focused={true}
             step={0.5}
-          />
+          ></TextFieldWrapper>
           <TextFieldWrapper
             name="price_range"
             inputRef={register}
@@ -157,7 +171,7 @@ const FoodEditor = ({ match }) => {
             onChange={handleChange}
             helperText="Select food price range"
             margin="normal"
-            width={'300px'}
+            width={"300px"}
             focused={true}
           >
             {priceRanges.map((option) => (
@@ -169,21 +183,40 @@ const FoodEditor = ({ match }) => {
 
           <ButtonArea color="white" mt={5}>
             <ButtonWrapper mr={5}>
-              <StyledButtonPrimary type="submit" variant="contained" size="large" color="inherit" p={1} title="Edit food">
-                {editMode ? 'UPDATE' : 'CREATE'}
+              <StyledButtonPrimary
+                type="submit"
+                variant="contained"
+                size="large"
+                color="inherit"
+                p={1}
+                title="Edit food"
+              >
+                {editMode ? "UPDATE" : "CREATE"}
               </StyledButtonPrimary>
             </ButtonWrapper>
 
             {editMode ? (
-              <LinkWrapper to={'/food/' + food._id} key={food._id}>
-                <StyledButtonSecondary type="submit" variant="contained" size="large" p={1} title="Cancel edit">
-                  <StyledBox color={'primary'}>CANCEL</StyledBox>
+              <LinkWrapper to={"/food/" + food._id} key={food._id}>
+                <StyledButtonSecondary
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  p={1}
+                  title="Cancel edit"
+                >
+                  <StyledBox color={"primary"}>CANCEL</StyledBox>
                 </StyledButtonSecondary>
               </LinkWrapper>
             ) : (
-              <LinkWrapper to={'/'}>
-                <StyledButtonSecondary type="submit" variant="contained" size="large" p={1} title="Send in form and create food">
-                  <StyledBox color={'primary'}>CANCEL</StyledBox>
+              <LinkWrapper to={"/"}>
+                <StyledButtonSecondary
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  p={1}
+                  title="Send in form and create food"
+                >
+                  <StyledBox color={"primary"}>CANCEL</StyledBox>
                 </StyledButtonSecondary>
               </LinkWrapper>
             )}
@@ -227,5 +260,4 @@ const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
 `;
-
-export default FoodEditor;
+export default CreateFood;
